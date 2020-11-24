@@ -18,6 +18,7 @@
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
     "draft-js-plugins-utils": "^2.0.3",
+    "formik": "^2.2.5",
     "immutable": "^4.0.0-rc.12",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

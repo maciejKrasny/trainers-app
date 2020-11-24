@@ -3,6 +3,8 @@ export interface User {
     name: string;
     surname: string;
     city: string;
+    nrPhone: number;
+    email: string;
     specializations: string[];
     shortDescription: string;
 }

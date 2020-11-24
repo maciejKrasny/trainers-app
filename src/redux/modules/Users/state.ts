@@ -8,7 +8,9 @@ const intialState: UserState = {
             specializations: ['Bieganie', 'Pływanie', 'Kolarstwo'],
             surname: 'Kowalski',
             city: 'Poznań',
-            shortDescription: 'Zapraszam na mój trening'
+            shortDescription: 'Zapraszam na mój trening',
+            email: 'email',
+            nrPhone: 123123123,
         },
         {
             id: 1,
@@ -17,6 +19,8 @@ const intialState: UserState = {
             surname: 'Kowalska',
             city: 'Warszawa',
             shortDescription: ' ',
+            email: 'email',
+            nrPhone: 123123123,
         }
     ],
     pending: false,

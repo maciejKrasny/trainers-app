@@ -5,10 +5,11 @@ import React from 'react';
 export interface InputWithChipsProps {
     onChange: (value: string[]) => void;
     options: string[];
-    value: string[];
+    value?: string[];
+    id?: string;
 }
 
-const InputWithChips: React.FC<InputWithChipsProps> = ({ value, onChange, options }) => {
+const InputWithChips: React.FC<InputWithChipsProps> = ({ value, onChange, options, id }) => {
     const handleOnChange = (_: React.ChangeEvent<{}>, value: string[]) => {
         onChange(value);
     }
@@ -16,12 +17,12 @@ const InputWithChips: React.FC<InputWithChipsProps> = ({ value, onChange, option
     return (
         <div>
             <Autocomplete
-                id="specializations"
+                id={id}
                 multiple
                 value={value}
                 options={options}
                 getOptionLabel={(option: any) => option}
-                style={{ width: 400, height: '30' }}
+                style={{ width: '100%', height: '30' }}
                 filterSelectedOptions
                 onChange={handleOnChange}
                 renderInput={(params: any) => <TextField {...params} size="small" label="Specjalizacja" variant="outlined" />}

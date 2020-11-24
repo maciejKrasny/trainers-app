@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import FilterSection from '../components/FilterSection/FilterSection';
 import { GridContainer } from '../components/Grid/Grid.styled';
 import Layout from '../components/Layout/Layout'
 import TrainerCard from '../components/TrainerCard/TrainerCard';
 import { User } from '../redux/modules/Users/types';
+
 
 const filterByCity = (users: User[], city: string) => {
     return users.filter(user => user.city === city);

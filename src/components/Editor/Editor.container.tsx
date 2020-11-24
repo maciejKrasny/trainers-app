@@ -11,15 +11,16 @@ import { stateToHTML } from 'draft-js-export-html';
 
 interface EditorProps {
   content?: string;
+  creator?: number;
 }
 
-const EditorContainer: React.FC<EditorProps> = ({ content }) => {
+const EditorContainer: React.FC<EditorProps> = ({ content, creator }) => {
   const dispatch = useDispatch();
 
   const handleOnSubmitContent = (data: EditorState) => {
     dispatch(postThunks.addPost({
       id: uuid(),
-      creator: 1,
+      creator: creator || -1,
       content: stateToHTML(data.getCurrentContent()),
     }));
   }

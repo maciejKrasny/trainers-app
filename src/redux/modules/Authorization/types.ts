@@ -1,32 +1,38 @@
 export interface AuthorizationUser {
     id: number;
-    name: string;
-    surname: string;
-    city: string;
-    specializations: string[];
+    userId: number;
+    login: string;
+    password: string;
 }
 
 export interface AuthorizationState {
-    user?: AuthorizationUser;
+    authorizationUsers: AuthorizationUser[];
+    currentAuthorizationUser?: AuthorizationUser;
     pending: boolean;
 }
 
-export const SET_USER = 'SET_USERS';
-export const SET_USER_PENDING = 'SET_USER_PENDING';
-export const CLEAR_USER = 'CLEAR_USER';
+export const SET_AUTHORIZATION_USERS = 'SET_AUTHORIZATION_USERS';
+export const SET_CURRENT_AUTHORIZATION_USER = 'SET_CURRENT_AUTHORIZATION_USER';
+export const SET_AUTHORIZATION_USER_PENDING = 'SET_AUTHORIZATION_USER_PENDING';
+export const CLEAR_CURRENT_AUTHORIZATION_USER = 'CLEAR_CURRENT_AUTHORIZATION_USER';
 
-export interface SetUserAction {
-    type: typeof SET_USER;
-    payload: AuthorizationUser;
+export interface SetAuthorizationUsersAction {
+    type: typeof SET_AUTHORIZATION_USERS;
+    payload: AuthorizationUser[];
 }
 
-export interface ClearUserAction {
-    type: typeof CLEAR_USER;
+export interface ClearCurrentAuthorizationUserAction {
+    type: typeof CLEAR_CURRENT_AUTHORIZATION_USER;
 }
 
-export interface SetUserPending {
-    type: typeof SET_USER_PENDING;
+export interface SetAuthorizationUserPending {
+    type: typeof SET_AUTHORIZATION_USER_PENDING;
     payload: boolean;
 }
 
-export type AuthorizationActions = SetUserAction | ClearUserAction | SetUserPending;
+export interface SetCurrentAuthorizationUserPending {
+    type: typeof SET_CURRENT_AUTHORIZATION_USER;
+    payload: AuthorizationUser;
+}
+
+export type AuthorizationActions = SetAuthorizationUsersAction | ClearCurrentAuthorizationUserAction | SetAuthorizationUserPending | SetCurrentAuthorizationUserPending;
