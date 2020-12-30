@@ -3,11 +3,15 @@ import React from "react"
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 
-const Layout: React.FC = ({ children }) => {
+interface LayoutProps {
+    isSticky?: boolean;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children, isSticky }) => {
     return (
         <div>
             <Typography>
-                <Header />
+                <Header isSticky={isSticky} />
                 {children}
                 <Footer />
             </Typography>

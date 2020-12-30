@@ -1,12 +1,13 @@
 import React, { useEffect } from "react"
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import ListPage from '../../pages/List.page';
+import LandingPage from '../../pages/Landing.page';
 import TrainerPage from '../../pages/Trainer.page';
 import * as postThunks from '../../redux/modules/Posts/thunks';
 import * as userThunks from '../../redux/modules/Users/thunks';
 import * as authorizationThunks from '../../redux/modules/Authorization/thunks';
 import * as serviceThunks from '../../redux/modules/Services/thunks';
 import { useDispatch } from "react-redux";
+import ListPage from "../../pages/List.page";
 
 const MainRouter: React.FC = () => {
     const dispatch = useDispatch();
@@ -21,8 +22,9 @@ const MainRouter: React.FC = () => {
     return (
         <Router>
             <Switch>
+                <Route path="/trenerzy" component={ListPage} />
                 <Route path="/:id" component={TrainerPage} />
-                <Route path="/" component={ListPage} />
+                <Route path="/" component={LandingPage} />
             </Switch>
         </Router>
     )

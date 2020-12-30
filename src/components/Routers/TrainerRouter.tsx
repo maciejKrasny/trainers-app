@@ -21,7 +21,7 @@ const TrainerRouter: React.FC<TrainerRouterProps> = ({ user }) => {
                 <BlogSection user={user} />
             </Route>
             <Route path={`${path}/cennik`}>
-                <PriceList />
+                <PriceList user={user} />
             </Route>
             <Route exact path={path}>
                 <InfoSection user={user} />

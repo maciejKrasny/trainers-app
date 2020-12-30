@@ -44,7 +44,7 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
     }
 
     const dispatch = useDispatch();
-    const handleOnChangeCity = (_: React.ChangeEvent<{}>, newValue: any) => {
+    const handleOnChangeCity = (newValue: string) => {
         handleChange({
             target: {
                 name: 'city',

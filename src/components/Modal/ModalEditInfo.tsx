@@ -49,7 +49,7 @@ const ModalEditInfo: React.FC<ModalEditInfoProps> = ({ onClose }) => {
     }
 
     const dispatch = useDispatch();
-    const handleOnChangeCity = (_: React.ChangeEvent<{}>, newValue: any) => {
+    const handleOnChangeCity = (newValue: string) => {
         handleChange({
             target: {
                 name: 'city',

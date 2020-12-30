@@ -8,6 +8,7 @@ interface GridContainerProps {
 }
 
 export const GridContainer = styled.div<GridContainerProps>`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -25,13 +26,6 @@ export const GridContainer = styled.div<GridContainerProps>`
     max-width: ${remCalc(1024)}rem;
   `}
 
-  ${rwd[Breakpoint.XLARGE]`
-    max-width: ${remCalc(1264)}rem;
-  `}
-
-  ${rwd[Breakpoint.XXLARGE]`
-    max-width: ${remCalc(1366)}rem;
-  `}
 
   ${(props) => props.fullWidth && css`
     ${rwd[Breakpoint.SMALL]`
@@ -43,14 +37,6 @@ export const GridContainer = styled.div<GridContainerProps>`
     `}
 
     ${rwd[Breakpoint.LARGE]`
-      max-width: none;
-    `}
-
-    ${rwd[Breakpoint.XLARGE]`
-      max-width: none;
-    `}
-
-    ${rwd[Breakpoint.XXLARGE]`
       max-width: none;
     `}
   `}

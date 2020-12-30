@@ -5,7 +5,10 @@ import { GridContainer } from '../components/Grid/Grid.styled';
 import Layout from '../components/Layout/Layout'
 import TrainerCard from '../components/TrainerCard/TrainerCard';
 import { User } from '../redux/modules/Users/types';
-
+import MostPopularTrainersSection from '../components/MostPopularTrainersSection/MostPopularTrainersSection';
+import RegisterSection from "../components/RegisterSection/RegisterSection";
+import TrainersListSection from "../components/TrainersListSection/TrainersListSection";
+import FilterListSection from "../components/FilterListSection/FilterListSection";
 
 const filterByCity = (users: User[], city: string) => {
     return users.filter(user => user.city === city);
@@ -37,27 +40,14 @@ const filterUsers = (users: User[], city: string, specializations: string[]) => 
 
 const ListPage: React.FC = () => {
     const { users } = useSelector(state => state.users);
-
     const [city, setCity] = useState<string>('');
     const [specializations, setSpecializations] = useState<string[]>([]);
 
     return (
         <Layout>
-            <GridContainer>
-                <FilterSection
-                    city={city}
-                    onChangeCity={setCity}
-                    specializations={specializations}
-                    onChangeSpecializations={setSpecializations}
-                />
-                {filterUsers(users, city, specializations).map(user => (
-                    <TrainerCard
-                        name={`${user.name} ${user.surname}`}
-                        description={user.shortDescription}
-                        id={user.id}
-                        specializations={user.specializations}
-                    />
-                ))}
+            <GridContainer style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                <TrainersListSection trainers={filterUsers(users, city, specializations)} />
+                <FilterListSection city={city} specializations={specializations} onChangeCity={setCity} onChangeSpecialization={setSpecializations} />
             </GridContainer>
         </Layout>
     )

@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { Card, CardContent, Chip } from '@material-ui/core';
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {deepOrange} from "@material-ui/core/colors";
 
 export const StyledCard = styled(Card)`
     position: relative;
-    margin: 1rem 0;
+    width: 100%;
+    margin-top: 1px;
 `;
 
 export const StyledCardContent = styled(CardContent)`
@@ -27,3 +30,27 @@ export const ViewProfileButtonContainer = styled.div`
     right: 2rem;
     bottom: 1rem;
 `;
+
+export const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const DetailsInfoContainer = styled.div`
+  margin-left: 1rem;
+`;
+
+export const Location = styled.div`
+  font-size: 1rem;
+`;
+
+export const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        avatar: {
+            color: theme.palette.getContrastText(deepOrange[500]),
+            backgroundColor: deepOrange[500],
+            width: theme.spacing(7),
+            height: theme.spacing(7),
+        },
+    }),
+);

@@ -11,7 +11,10 @@ const colors = {
     lightGrey02: "#DDDDDD",
     lightGrey03: "#F3F3F3",
 
+    darkGrey02: "#646464",
+
     darkGrey01: "#333333",
+    darkGrey03: "#2E2F32",
 
     green01: "#2E7D32",
 

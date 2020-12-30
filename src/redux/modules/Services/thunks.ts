@@ -1,3 +1,4 @@
+import { uuid } from 'uuidv4';
 import { AppThunk } from '../../store/store.types';
 import { setPending, setServices } from './actions';
 import { Service } from './types';
@@ -15,19 +16,23 @@ export const fetchServices = (): AppThunk<Promise<void>> => async (
     dispatch(setPending(false));
 };
 
-export const addService = (data: Service): AppThunk<Promise<void>> => async (
+export const addService = (data: Omit<Service, 'id'>): AppThunk<Promise<void>> => async (
     dispatch,
     getState
 ) => {
     dispatch(setPending(true));
-    const services = [...getState().services.services, data];
+    const newService: Service = {
+        id: uuid(),
+        ...data,
+    }
+    const services = [...getState().services.services, newService];
     localStorage.setItem('services', JSON.stringify(services));
     dispatch(setServices(services));
     dispatch(setPending(false));
 };
 
 
-export const editServie = (service: Service): AppThunk<Promise<void>> => async (
+export const editService = (service: Service): AppThunk<Promise<void>> => async (
     dispatch,
     getState
 ) => {

@@ -1,8 +1,8 @@
 export interface Service {
     id: string;
     owner: number;
-    name: number;
-    price: string;
+    name: string;
+    price: number;
 }
 
 export interface ServicesState {

@@ -1,23 +1,43 @@
 import { Typography } from '@material-ui/core';
 import React from 'react'
-import { HeaderContainer, Logo } from './Header.styled';
+import { HeaderContainer, Logo, BackgroundContainer, ActionContainer, Action } from './Header.styled';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Dropdown from '../Dropdown/Dropdown';
 import { useSelector } from 'react-redux';
+import logo from './logo.png';
+import Modal, {ModalType} from "../Modal/Modal";
+import useOnClickOutside from "../../utils/hooks/useOnClickOutside";
+import {Wrapper} from "../Dropdown/Dropdown.styled";
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    isSticky?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ isSticky = true }) => {
     const { currentAuthorizationUser } = useSelector(state => state.authorizationUsers);
+
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [currentModal, setCurrentModal] = React.useState<ModalType>('');
+
+
+    const handleOnChangeCurrentModal = (type: ModalType) => {
+        setCurrentModal(type);
+        setIsOpen(false);
+    }
+
     return (
-        <HeaderContainer>
-            <Logo to="/">
-                <Typography variant="h4" component="h4">
-                    Trenerzy.pl
-                </Typography>
-            </Logo>
-            <Dropdown
-                activator={<AccountCircleIcon fontSize="large" style={{ color: currentAuthorizationUser ? '#3f51b5' : '#A3A6B1' }} />}
-            />
-        </HeaderContainer>
+        <BackgroundContainer isSticky={isSticky}>
+            <HeaderContainer>
+                <Logo to="/">
+                    <img src={logo} height={70}/>
+                </Logo>
+                <ActionContainer>
+                    <Action onClick={() => handleOnChangeCurrentModal('signIn')}>Zaloguj się</Action>
+                    <Action onClick={() => handleOnChangeCurrentModal('signUp')}>Zarejestruj się</Action>
+                </ActionContainer>
+            </HeaderContainer>
+            <Modal isOpen={Boolean(currentModal)} type={currentModal} onClose={() => setCurrentModal('')} />
+        </BackgroundContainer>
     );
 };
 

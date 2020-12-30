@@ -3,16 +3,19 @@ import { createStyles, Fade, makeStyles, Modal as MaterialModal, Theme, Backdrop
 import ModalSignInBody from "./ModalSignInBody";
 import ModalSignUpBody from "./ModalSignUpBody";
 import ModalEditInfo from "./ModalEditInfo";
+import ModalEditService from "./ModalEditService";
+import { Service } from "../../redux/modules/Services/types";
 
-export type ModalType = '' | 'signIn' | 'signUp' | 'editInfo';
+export type ModalType = '' | 'signIn' | 'signUp' | 'editInfo' | 'editService';
 
 interface ModalProps {
     type: ModalType;
     isOpen: boolean;
+    service?: Service;
     onClose: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         modal: {
             display: 'flex',
@@ -22,9 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Modal: React.FC<ModalProps> = ({ isOpen, type, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, type, onClose, service }) => {
     const classes = useStyles();
-
     const body = React.useMemo(() => {
         if (type === 'signIn') {
             return <ModalSignInBody onClose={onClose}/>
@@ -35,8 +37,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, type, onClose }) => {
         if (type === 'editInfo') {
             return <ModalEditInfo onClose={onClose} />
         }
+        if (type === 'editService') {
+            return <ModalEditService onClose={onClose} service={service} />
+        }
         return <div></div>;
-    }, [type]);
+    }, [type, service]);
 
     return (
         <MaterialModal

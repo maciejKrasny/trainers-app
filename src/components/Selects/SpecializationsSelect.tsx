@@ -9,7 +9,6 @@ interface SpecializationsSelectProps {
 }
 
 const SpecializationsSelect: React.FC<SpecializationsSelectProps> = ({ onChange, value, id }) => {
-    console.log(specializations)
     return (
         <InputWithChips id={id} value={value} options={specializations} onChange={onChange} />
     )

@@ -10,7 +10,6 @@ export const fetchPosts = (): AppThunk<Promise<void>> => async (
     const response = localStorage.getItem('posts');
     if (response) {
         const parsedResponse: Post[] = JSON.parse(response);
-        console.log(parsedResponse)
         dispatch(setPosts(parsedResponse));
     }
     dispatch(setPending(false));

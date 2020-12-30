@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,6 +7,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { PriceListContainer, StyledButton, StyledCreateIcon } from "./PriceListSection.styled";
+import { User } from "../../redux/modules/Users/types";
+import { useSelector } from "react-redux";
+import Modal from "../Modal/Modal";
+import { Service } from "../../redux/modules/Services/types";
 
 const rows = [
     {
@@ -26,34 +30,61 @@ const rows = [
     },
 ]
 
-const PriceList: React.FC = () => {
+interface PriceListProps {
+    user?: User;
+}
+
+const PriceList: React.FC<PriceListProps> = ({ user }) => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [curService, setCurService] = useState<Service>();
+    const { currentAuthorizationUser } = useSelector(state => state.authorizationUsers);
+    const isCurrentUser = user?.id === currentAuthorizationUser?.userId;
+    const { services } = useSelector(state => state.services);
+
+    const userServices = useMemo(() => {
+        return services.filter(service => service.owner === user?.id);
+    }, [user, services]);
+
     return (
         <PriceListContainer>
-            <StyledButton variant="contained" color="primary">Dodaj</StyledButton>
+            {isCurrentUser && <StyledButton variant="contained" color="primary" onClick={() => setIsEditModalOpen(true)}>Dodaj</StyledButton>}
             <TableContainer component={Paper}>
                 <Table >
                     <TableHead>
                         <TableRow>
-                            <TableCell padding="checkbox"></TableCell>
+                            {isCurrentUser && <TableCell padding="checkbox"></TableCell>}
                             <TableCell>Usługa</TableCell>
                             <TableCell align="right">Cena</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell padding="checkbox"><StyledCreateIcon onClick={() => console.log('edit')}/></TableCell>
+                        {userServices.map((service) => (
+                            <TableRow key={service.id}>
+                                {isCurrentUser && <TableCell padding="checkbox"><StyledCreateIcon onClick={() => {
+                                    setIsEditModalOpen(true);
+                                    setCurService(service);
+                                }}
+                                /></TableCell>}
                                 <TableCell component="th" scope="row">
-                                    {row.services}
+                                    {service.name}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {`${row.price}zł`}
+                                    {`${service.price}zł`}
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Modal type="editService" onClose={() => {
+                setIsEditModalOpen(false);
+                if (services) {
+                    setCurService(undefined);
+                }
+            }}
+                isOpen={isEditModalOpen}
+                service={curService}
+            />
         </PriceListContainer>
     )
 };
