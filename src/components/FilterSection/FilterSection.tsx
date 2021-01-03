@@ -3,6 +3,8 @@ import { FilterContainer, CitySelectContainer, SpecializationsSelectContainer, F
 import SpecializationsSelect from '../Selects/SpecializationsSelect';
 import CitySelect from '../Selects/CitySelect';
 import {green} from "@material-ui/core/colors";
+import {useHistory} from "react-router-dom";
+import queryString from "querystring";
 
 export interface FilterSectionProps {
     city: string;
@@ -12,7 +14,29 @@ export interface FilterSectionProps {
 }
 
 const FilterSection: React.FC<FilterSectionProps> = ({ city, specializations, onChangeCity, onChangeSpecializations }) => {
+    const history = useHistory();
 
+    const handleOnClickSearch = () => {
+        const specsString = specializations.join(',').trim();
+        if (city && specializations.length) {
+            history.push({
+                pathname: 'trenerzy',
+                search: `miasto=${city}&aktywnosci=${specsString}`
+            })
+        } else if (city) {
+            history.push({
+                pathname: 'trenerzy',
+                search: `city=${city}`
+            })
+        } else if (specializations.length) {
+            history.push({
+                pathname: 'trenerzy',
+                search: `${specsString}`
+            })
+        } else {
+            history.push('trenerzy')
+        }
+    }
 
     return (
         <FilterContainer>
@@ -27,7 +51,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ city, specializations, on
                     <SpecializationsSelectContainer>
                         <SpecializationsSelect onChange={onChangeSpecializations} value={specializations} />
                     </SpecializationsSelectContainer>
-                    <FindButton variant="contained"  >Szukaj</FindButton>
+                    <FindButton variant="contained" onClick={handleOnClickSearch} >Szukaj</FindButton>
                 </BackgroundContainer>
             </Filters>
         </FilterContainer>

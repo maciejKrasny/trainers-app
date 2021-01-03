@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { remCalc } from "../../utils/styles/utils";
+import {hexToRGB, remCalc} from "../../utils/styles/utils";
 import colors from '../../utils/styles/colors';
 
 export const Wrapper = styled.div`
@@ -36,7 +36,7 @@ export const DropdownContainer = styled.div<DropdownContainerProps>`
   font-size: ${remCalc(14)}rem;
   padding: ${remCalc(12)}rem 0;
   margin-top: 0.5rem;
-  background-color: #fff;
+  background-color: ${hexToRGB('#ffffff', 0.9)};
   border: ${remCalc(1)}rem solid ${colors.black06};
   border-radius: ${remCalc(11)}rem 0 ${remCalc(11)}rem ${remCalc(11)}rem;
   box-shadow: ${remCalc(2)}rem ${remCalc(4)}rem ${remCalc(6)}rem ${colors.black06};
@@ -48,7 +48,7 @@ export const DropdownContainer = styled.div<DropdownContainerProps>`
 
 export const DropdownAction = styled.div`
   cursor: pointer;
-  color: ${colors.darkBlue01};
+  color: ${colors.darkGrey02};
   padding: ${remCalc(10)}rem ${remCalc(15)}rem;
   background-color: ${colors.black00};
 

@@ -1,6 +1,7 @@
 import { Chip, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import React from 'react';
+import {useStyles} from "./InputWithChips.styled";
 
 export interface InputWithChipsProps {
     onChange: (value: string[]) => void;
@@ -10,6 +11,7 @@ export interface InputWithChipsProps {
 }
 
 const InputWithChips: React.FC<InputWithChipsProps> = ({ value, onChange, options, id }) => {
+    const classes = useStyles();
     const handleOnChange = (_: React.ChangeEvent<{}>, value: string[]) => {
         onChange(value);
     }
@@ -19,6 +21,10 @@ const InputWithChips: React.FC<InputWithChipsProps> = ({ value, onChange, option
             <Autocomplete
                 id={id}
                 multiple
+                classes={{
+                    popper: classes.popper,
+                    paper: classes.paper
+                }}
                 value={value}
                 options={options}
                 getOptionLabel={(option: any) => option}

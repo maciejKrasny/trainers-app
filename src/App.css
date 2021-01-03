@@ -2,6 +2,7 @@ figure {
   margin: 0;
 }
 
-body {
+html, body {
   margin: 0;
+  background: #fafafa;
 }

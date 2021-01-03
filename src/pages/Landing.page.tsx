@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import FilterSection from '../components/FilterSection/FilterSection';
 import { GridContainer } from '../components/Grid/Grid.styled';
 import Layout from '../components/Layout/Layout'
-import TrainerCard from '../components/TrainerCard/TrainerCard';
-import { User } from '../redux/modules/Users/types';
 import MostPopularTrainersSection from '../components/MostPopularTrainersSection/MostPopularTrainersSection';
 import RegisterSection from "../components/RegisterSection/RegisterSection";
 

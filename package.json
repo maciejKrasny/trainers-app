@@ -20,6 +20,7 @@
     "draft-js-plugins-utils": "^2.0.3",
     "formik": "^2.2.5",
     "immutable": "^4.0.0-rc.12",
+    "query-string": "^6.13.8",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
@@ -59,6 +60,7 @@
   "devDependencies": {
     "@types/draft-js": "^0.10.44",
     "@types/immutable": "^3.8.7",
+    "@types/query-string": "^6.3.0",
     "@types/react-redux": "^7.1.11"
   }
 }

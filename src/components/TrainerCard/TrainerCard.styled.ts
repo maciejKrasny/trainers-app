@@ -14,7 +14,12 @@ export const StyledCardContent = styled(CardContent)`
 `;
 
 export const SpecializationsContainer = styled.div`
-    margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  max-width: 400px;
+  margin-right: 2rem;
 `;
 
 export const StyledChip = styled(Chip)`

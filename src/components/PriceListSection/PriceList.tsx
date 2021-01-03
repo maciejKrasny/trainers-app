@@ -9,8 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import { PriceListContainer, StyledButton, StyledCreateIcon } from "./PriceListSection.styled";
 import { User } from "../../redux/modules/Users/types";
 import { useSelector } from "react-redux";
-import Modal from "../Modal/Modal";
 import { Service } from "../../redux/modules/Services/types";
+import Row from "./Row";
 
 const rows = [
     {
@@ -42,49 +42,35 @@ const PriceList: React.FC<PriceListProps> = ({ user }) => {
     const { services } = useSelector(state => state.services);
 
     const userServices = useMemo(() => {
-        return services.filter(service => service.owner === user?.id);
+        return services.filter(service => service.owner === user?.id).reduce<{[key: string]: Service[]}>((acc, service) => {
+            if (acc[service.category]) {
+                acc[service.category] = [...acc[service.category], service];
+            } else {
+                acc[service.category] = [service];
+            }
+            return acc;
+        }, {});
     }, [user, services]);
 
     return (
         <PriceListContainer>
-            {isCurrentUser && <StyledButton variant="contained" color="primary" onClick={() => setIsEditModalOpen(true)}>Dodaj</StyledButton>}
             <TableContainer component={Paper}>
                 <Table >
                     <TableHead>
                         <TableRow>
-                            {isCurrentUser && <TableCell padding="checkbox"></TableCell>}
+                            <TableCell />
+                            <TableCell>Kategoria</TableCell>
                             <TableCell>Usługa</TableCell>
                             <TableCell align="right">Cena</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {userServices.map((service) => (
-                            <TableRow key={service.id}>
-                                {isCurrentUser && <TableCell padding="checkbox"><StyledCreateIcon onClick={() => {
-                                    setIsEditModalOpen(true);
-                                    setCurService(service);
-                                }}
-                                /></TableCell>}
-                                <TableCell component="th" scope="row">
-                                    {service.name}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {`${service.price}zł`}
-                                </TableCell>
-                            </TableRow>
+                        {Object.entries(userServices).map(([category, services]) => (
+                         <Row category={category} services={services}  />
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Modal type="editService" onClose={() => {
-                setIsEditModalOpen(false);
-                if (services) {
-                    setCurService(undefined);
-                }
-            }}
-                isOpen={isEditModalOpen}
-                service={curService}
-            />
         </PriceListContainer>
     )
 };

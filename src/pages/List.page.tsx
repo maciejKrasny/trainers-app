@@ -9,6 +9,9 @@ import MostPopularTrainersSection from '../components/MostPopularTrainersSection
 import RegisterSection from "../components/RegisterSection/RegisterSection";
 import TrainersListSection from "../components/TrainersListSection/TrainersListSection";
 import FilterListSection from "../components/FilterListSection/FilterListSection";
+import useQuery from "../utils/hooks/useUrlQuery";
+import {useHistory, useLocation} from "react-router-dom";
+import queryString from 'querystring';
 
 const filterByCity = (users: User[], city: string) => {
     return users.filter(user => user.city === city);
@@ -40,14 +43,56 @@ const filterUsers = (users: User[], city: string, specializations: string[]) => 
 
 const ListPage: React.FC = () => {
     const { users } = useSelector(state => state.users);
+    const history = useHistory();
+
     const [city, setCity] = useState<string>('');
     const [specializations, setSpecializations] = useState<string[]>([]);
+
+    const query = useQuery();
+    const handleOnChangeCity = (selectedCity: string | null) => {
+        if (specializations.length) {
+            const specsString = specializations.join(',').trim();
+
+            history.push({
+                pathname: 'trenerzy',
+                search: `miasto=${selectedCity || ''}&aktywnosci=${specsString}`
+            })
+        } else {
+            history.push({
+                pathname: 'trenerzy',
+                search: `miasto=${selectedCity || ''}`,
+            })
+        }
+    }
+
+    const handleOnChangeSpec = (specs: string[]) => {
+        const specsString = specs.join(',').trim();
+        if (city) {
+            history.push({
+                pathname: 'trenerzy',
+                search: `miasto=${city}&aktywnosci=${specsString}`
+            })
+        } else {
+            history.push({
+                pathname: 'trenerzy',
+                search: `aktywnosci=${specsString}`
+            })
+        }
+    }
+    const queryCity = query.get("miasto");
+    const querySpec = query.get("aktywnosci")
+    console.log(querySpec)
+    const specs: string[] = querySpec ? querySpec.split(',') : [];
+    useEffect(() => {
+        setCity(queryCity || '');
+        setSpecializations(specs);
+    }, [queryCity, specs?.length]);
 
     return (
         <Layout>
             <GridContainer style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <TrainersListSection trainers={filterUsers(users, city, specializations)} />
-                <FilterListSection city={city} specializations={specializations} onChangeCity={setCity} onChangeSpecialization={setSpecializations} />
+                <FilterListSection city={city} specializations={specializations} onChangeCity={handleOnChangeCity} onChangeSpecialization={handleOnChangeSpec} />
             </GridContainer>
         </Layout>
     )

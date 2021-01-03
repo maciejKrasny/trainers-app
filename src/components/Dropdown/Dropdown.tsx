@@ -26,39 +26,20 @@ const Dropdown: React.FC<Props> = ({ children, activator }) => {
 
     useOnClickOutside(dropdownWrapper, () => setIsOpen(false));
 
-    const handleOnChangeCurrentModal = (type: ModalType) => {
-        setCurrentModal(type);
-        setIsOpen(false);
-    }
-
     return (
         <Wrapper ref={dropdownWrapper}>
             <DropdownButton type="button" onKeyDown={handleActivatorClick} onClick={handleActivatorClick}>
                 {activator}
             </DropdownButton>
             <DropdownContainer isOpen={isOpen}>
-                {currentAuthorizationUser
-                    ? (
-                        <>
-                            <DropdownAction onClick={() => history.push(`/${currentAuthorizationUser.userId}`)}>
-                                <Typography>Profil</Typography>
-                            </DropdownAction>
-                            <DropdownAction onClick={() => { dispatch(authorizationThunks.clearCurrentAuthorizationUser()); setIsOpen(false)}}>
-                                <Typography>Wyloguj się</Typography>
-                            </DropdownAction>
-                        </>
-                    )
-                    : (
-                        <>
-                            <DropdownAction onClick={() => handleOnChangeCurrentModal('signIn')}>
-                                <Typography>Zaloguj się</Typography>
-                            </DropdownAction>
-                            <DropdownAction onClick={() => handleOnChangeCurrentModal('signUp')}>
-                                <Typography>Zarejestruj się</Typography>
-                            </DropdownAction>
-                        </>
-                    )
-                }
+                <>
+                    <DropdownAction onClick={() => history.push(`/${currentAuthorizationUser?.userId}`)}>
+                        <Typography>Profil</Typography>
+                    </DropdownAction>
+                    <DropdownAction onClick={() => { dispatch(authorizationThunks.clearCurrentAuthorizationUser()); setIsOpen(false)}}>
+                        <Typography>Wyloguj się</Typography>
+                    </DropdownAction>
+                </>
             </DropdownContainer>
             <Modal isOpen={Boolean(currentModal)} type={currentModal} onClose={() => setCurrentModal('')} />
         </Wrapper>

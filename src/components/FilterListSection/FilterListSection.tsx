@@ -22,7 +22,8 @@ const FilterListSection: React.FC<FilterListSectionProps> = ({ city, specializat
             <SpecializationsContainer>
                 <SpecializationsSelect onChange={onChangeSpecialization} value={specializations} />
             </SpecializationsContainer>
-            <Rating />
+            <Typography style={{marginTop: '-0.5rem', color: 'rgba(0, 0, 0, 0.54)'}} >Ocena</Typography>
+            <Rating style={{marginLeft: '-0.125rem'}}/>
             </Container>
         </FilterContainer>
     );

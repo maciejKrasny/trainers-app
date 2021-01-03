@@ -3,10 +3,13 @@ import styled, {css} from 'styled-components';
 import { GridContainer } from '../Grid/Grid.styled';
 import {Typography} from "@material-ui/core";
 import {hexToRGB, remCalc} from "../../utils/styles/utils";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {deepOrange} from "@material-ui/core/colors";
+import {ArrowDropDown} from "@material-ui/icons";
 
 export const BackgroundContainer = styled.div<{isSticky?: boolean}>`
   position: ${({isSticky}) => isSticky ? 'sticky' : 'fixed'};
-  z-index: 2;
+  z-index: 3;
   top: 0;
   width: 100%;
   ${({ theme }) => css`
@@ -46,4 +49,18 @@ export const Action = styled(Typography)`
   transition: ${(props) => props.theme.transition} ;
 `;
 
+export const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      avatar: {
+        color: theme.palette.getContrastText(deepOrange[500]),
+        backgroundColor: deepOrange[500],
+        width: theme.spacing(5),
+        height: theme.spacing(5),
+        fontSize: '1rem',
+      },
+    }),
+);
 
+export const AvatarContainer = styled.div`
+  position: relative;
+`;

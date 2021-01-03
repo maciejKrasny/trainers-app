@@ -1,9 +1,17 @@
-import { RawDraftContentState } from "draft-js";
-
-export interface Post {
+export interface Comment {
     id: string;
     creator: number;
     content: string;
+    postId: string;
+}
+
+export interface Post {
+    id: string;
+    title: string;
+    creator: number;
+    content: string;
+    comments?: Comment[];
+    type: "POST" | "EVENT";
 }
 
 export interface PostsState {

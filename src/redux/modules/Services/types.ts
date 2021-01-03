@@ -3,6 +3,7 @@ export interface Service {
     owner: number;
     name: string;
     price: number;
+    category: string;
 }
 
 export interface ServicesState {

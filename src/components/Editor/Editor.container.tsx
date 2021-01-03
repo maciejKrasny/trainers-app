@@ -22,6 +22,8 @@ const EditorContainer: React.FC<EditorProps> = ({ content, creator }) => {
       id: uuid(),
       creator: creator || -1,
       content: stateToHTML(data.getCurrentContent()),
+      type: 'POST',
+      title: 'title'
     }));
   }
   if (!content) {

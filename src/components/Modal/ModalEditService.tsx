@@ -37,12 +37,14 @@ const ModalEditService: React.FC<ModalEditServiceProps> = ({ onClose, service })
                 owner: service.owner,
                 name: name,
                 price: price,
+                category: service.category,
             }));
         } else {
             dispatch(serviceThunks.addService({
                 owner: currentAuthorizationUser?.userId || -1,
                 name: name,
                 price: price,
+                category:  '',
             }));
         }
 

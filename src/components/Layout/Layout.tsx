@@ -9,8 +9,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, isSticky }) => {
     return (
-        <div>
-            <Typography>
+        <div >
+            <Typography style={{minHeight: '100vh', position: 'relative'}}>
                 <Header isSticky={isSticky} />
                 {children}
                 <Footer />

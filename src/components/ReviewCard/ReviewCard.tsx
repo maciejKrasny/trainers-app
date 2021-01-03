@@ -1,0 +1,47 @@
+import React, {useState} from 'react';
+import {Avatar, Card, CardContent, Typography} from "@material-ui/core";
+import {
+    DetailsContainer,
+    InfoContainer,
+    Location,
+    Name,
+    useStyles
+} from "../MostPopularTrainerCard/MostPopularTrainerCard.styled";
+import { Rating } from '@material-ui/lab';
+import {ReadMore} from "../PostCard/PostCard.styled";
+
+interface ReviewCardProps {
+    name: string;
+    surname: string;
+    rating: number;
+    content: string;
+    location: string;
+}
+
+const ReviewCard: React.FC<ReviewCardProps> = ({name, content,rating, surname, location}) => {
+    const classes = useStyles();
+    const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
+    const shorterContent = content.length > 300 ? content.substr(0, 300) : content;
+    return (
+        <Card style={{marginTop: '1rem'}}>
+            <DetailsContainer >
+                <Avatar className={classes.avatar}>{`${name[0]}${surname[0]}`}</Avatar>
+                <InfoContainer>
+                    <Name>{`${name} ${surname}`}</Name>
+                    <Location>{location}</Location>
+                </InfoContainer>
+            </DetailsContainer>
+            <CardContent>
+                <Typography color="textPrimary">Ocena</Typography>
+                <Rating value={rating} style={{marginLeft: -2}} />
+                <Typography color="textPrimary">Recenzja</Typography>
+                <Typography color="textSecondary">
+                    {isReadMoreOpen ? content : `${shorterContent}...`}
+                    {content.length > 300 && <ReadMore onClick={() => setIsReadMoreOpen(!isReadMoreOpen)}>{isReadMoreOpen ? "Pokaż mniej" : "Pokaż więcej"}</ReadMore>}
+                </Typography>
+            </CardContent>
+        </Card>
+    );
+}
+
+export default ReviewCard;

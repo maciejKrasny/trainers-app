@@ -6,7 +6,7 @@ export const PriceListContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    width: 100%;
+    padding: 1.5rem;
 `;
 
 export const StyledButton = styled(Button)`
