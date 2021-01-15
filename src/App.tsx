@@ -5,7 +5,7 @@ import {green, indigo, purple} from '@material-ui/core/colors';
 import { createMuiTheme, Theme, ThemeProvider } from '@material-ui/core';
 import { Provider, useDispatch } from "react-redux";
 import store from './redux/store/store';
-import MainRouter from './components/Routers/MainRouter';
+import MainRouter from './components/home/Routers/MainRouter';
 import colors from "./utils/styles/colors";
 
 
