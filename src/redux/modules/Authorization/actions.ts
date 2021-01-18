@@ -1,8 +1,14 @@
-import {  AuthorizationUser, AuthorizationActions, SET_AUTHORIZATION_USERS, CLEAR_CURRENT_AUTHORIZATION_USER, SET_AUTHORIZATION_USER_PENDING, SET_CURRENT_AUTHORIZATION_USER } from "./types";
+import {
+    AuthorizationActions,
+    AuthorizationUser,
+    CLEAR_CURRENT_AUTHORIZATION_USER,
+    SET_AUTHORIZATION_USER_PENDING,
+    SET_AUTHORIZATION_USER,
+} from "./types";
 
-export function setAuthorizationUsers(data: AuthorizationUser[]): AuthorizationActions {
+export function setAuthorizationUser(data: AuthorizationUser): AuthorizationActions {
     return {
-        type: SET_AUTHORIZATION_USERS,
+        type: SET_AUTHORIZATION_USER,
         payload: data,
     };
 }
@@ -18,11 +24,4 @@ export function setAuthorizationUserPending(data: boolean): AuthorizationActions
         type: SET_AUTHORIZATION_USER_PENDING,
         payload: data,
     };
-}
-
-export function setCurrentAuthorizationUser(data: AuthorizationUser): AuthorizationActions {
-    return {
-        type: SET_CURRENT_AUTHORIZATION_USER,
-        payload: data,
-    }
 }

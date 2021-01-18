@@ -7,28 +7,28 @@ import EventsSection from "../EventsSection/EventsSection";
 import ReviewSection from "../ReviewSection/ReviewSection";
 
 interface TrainerRouterProps {
-    user?: User;
+    userId: string;
 }
 
-const TrainerRouter: React.FC<TrainerRouterProps> = ({ user }) => {
+const TrainerRouter: React.FC<TrainerRouterProps> = ({ userId }) => {
     let { path } = useRouteMatch();
 
     return (
         <Switch>
             <Route path={`${path}/blog`}>
-                <BlogSection user={user} />
+                <BlogSection userId={userId}/>
             </Route>
             <Route path={`${path}/recenzje`}>
-                <ReviewSection  />
+                <ReviewSection userId={userId} />
             </Route>
             <Route path={`${path}/wydarzenia`}>
-                <EventsSection />
+                <EventsSection userId={userId} />
             </Route>
             <Route path={`${path}/cennik`}>
-                <PriceList user={user} />
+                <PriceList userId={userId} />
             </Route>
             <Route exact path={path}>
-                <BlogSection user={user} />
+                <BlogSection userId={userId}/>
             </Route>
         </Switch>
     )

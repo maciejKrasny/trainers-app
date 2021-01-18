@@ -1,55 +1,86 @@
-import React from 'react';
-import {AddReviewItems, AddReviewContainer, AddReviewLabel, ReviewSectionContainer, AddTextReviewContainer, ReviewsContainer } from './ReviewSection.styled';
-import {Button, TextField} from "@material-ui/core";
+import React, {useEffect, useState} from 'react';
+import {
+    AddReviewContainer,
+    AddReviewItems,
+    AddReviewLabel,
+    AddTextReviewContainer,
+    ReviewsContainer,
+    ReviewSectionContainer
+} from './ReviewSection.styled';
+import {Button, CircularProgress, TextField} from "@material-ui/core";
 import {Rating} from "@material-ui/lab";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import ReviewCard from '../ReviewCard/ReviewCard';
-
-const reviews = [
-    {
-        creator: 2,
-        rating: 4,
-        content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic'
-    },
-    {
-        creator: 3,
-        rating: 4,
-        content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic'
-    }
-]
+import * as reviewThunks from '../../../redux/modules/Reviews/thunks';
 
 interface ReviewSectionProps {
-
+    userId: string;
 }
 
-const ReviewSection: React.FC<ReviewSectionProps> = () => {
-    const { users } = useSelector(state => state.users);
+const ReviewSection: React.FC<ReviewSectionProps> = ({ userId }) => {
+    const dispatch = useDispatch();
+    const { authorization } = useSelector(state => state.authorizationUsers);
+    const { reviews, pending } = useSelector(state => state.reviews);
+    const [reviewValue, setReviewValue] = useState('');
+    const [ratingValue, setRatingValue] = useState(0);
+    const [error, setError] = useState(false);
+
+    const handleOnAdd = () => {
+        if (reviewValue && ratingValue) {
+            setReviewValue('');
+            setRatingValue(0);
+            dispatch(reviewThunks.addReview({ id: userId, grade: ratingValue, content: reviewValue}));
+        } else {
+            setError(true);
+        }
+    }
+
+    useEffect(() => {
+        dispatch(reviewThunks.fetchReviews(userId));
+    }, [userId])
+
+    if (pending) {
+        return (
+            <ReviewSectionContainer style={{justifyContent: 'center', padding: '1.5rem'}}>
+                <CircularProgress />
+            </ReviewSectionContainer>
+            );
+    }
+
     return (
         <ReviewSectionContainer>
-                <AddReviewContainer>
-                    <AddReviewItems>
-                        <AddReviewLabel color="textPrimary">Dodaj ocenę</AddReviewLabel>
-                        <Rating style={{marginBottom: '1rem'}}/>
-                        <AddReviewLabel color="textPrimary">Dodaj recenzję</AddReviewLabel>
-                    </AddReviewItems>
-                    <Button style={{marginRight: '1.5rem'}} variant={"contained"} color="primary">Dodaj</Button>
-                </AddReviewContainer>
+            {authorization?.user._id !== userId && authorization && authorization.user.type !=='TRAINER' && (<><AddReviewContainer>
+                <AddReviewItems>
+                    <AddReviewLabel color="textPrimary">Dodaj ocenę</AddReviewLabel>
+                    <Rating onChange={(_, value) => {
+                        setRatingValue(value || 0)
+                        setError(false);
+                    }} value={ratingValue} style={{marginBottom: '1rem'}}/>
+                    <AddReviewLabel color="textPrimary">Dodaj recenzję</AddReviewLabel>
+                </AddReviewItems>
+                <Button onClick={() => handleOnAdd()} style={{marginRight: '1.5rem'}} variant={"contained"}
+                        color="primary">Dodaj</Button>
+            </AddReviewContainer>
                 <AddTextReviewContainer>
-                    <TextField style={{paddingLeft: '1.5rem', paddingRight: '1.5rem'}} multiline variant="outlined" rows={2} />
+                <TextField onChange={event => {
+                setReviewValue(event.target.value);
+                setError(false);
+            }} value={reviewValue} style={{paddingLeft: '1.5rem', paddingRight: '1.5rem'}} multiline variant="outlined" rows={2}
+                helperText={error ? 'Uzypełnij poprawnie dane' : null}
+                error={error}
+                />
                 </AddTextReviewContainer>
+                </>
+                )}
             <ReviewsContainer>
-                {reviews.map(review => {
-                    const creatorUser = users.find(user => user.id === review.creator);
-                    if (creatorUser) {
+                {reviews?.reverse().map(review => {
                         return <ReviewCard
-                            name={creatorUser.name}
-                            surname={creatorUser.surname}
-                            rating={review.rating}
+                            name={review.user.userDetails.firstName}
+                            surname={review.user.userDetails.lastName}
+                            rating={review.grade}
                             content={review.content}
-                            location={creatorUser.city}
+                            location={review.user.userDetails.city || ''}
                         />
-                    }
-                    return '';
                 })}
             </ReviewsContainer>
         </ReviewSectionContainer>

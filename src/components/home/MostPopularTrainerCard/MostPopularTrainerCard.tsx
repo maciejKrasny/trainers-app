@@ -5,13 +5,16 @@ import {Rating} from "@material-ui/lab";
 import {useHistory} from "react-router-dom";
 
 interface MostPopularTrainerCardProps {
-    id: number;
+    id: string;
     name: string;
     location: string;
     initials: string;
+    reviewCreator: string;
+    reviewContent: string;
+    reviewRating: number;
 }
 
-const MostPopularTrainersCard: React.FC<MostPopularTrainerCardProps> = ({ id, name, location, initials}) => {
+const MostPopularTrainersCard: React.FC<MostPopularTrainerCardProps> = ({ id, name, location, initials, reviewCreator, reviewRating, reviewContent}) => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -25,10 +28,10 @@ const MostPopularTrainersCard: React.FC<MostPopularTrainerCardProps> = ({ id, na
                 </InfoContainer>
             </DetailsContainer>
             <ReviewContainer>
-                <p>Maciej Kraśny dodał recenzję</p>
-                <p>Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach 60.</p>
+                <p>{reviewCreator} dodał/a recenzję</p>
+                <p>{reviewContent}</p>
                 <p>Wystawił ocenę</p>
-                <Rating style={{marginLeft: -2}} readOnly  value={5}/>
+                <Rating style={{marginLeft: -2}} readOnly  value={reviewRating}/>
             </ReviewContainer>
             <VisitButtonContainer>
                 <Button variant="contained" color="primary" onClick={() => history.push(`/${id}`)}>Odwiedź</Button>

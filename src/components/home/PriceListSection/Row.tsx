@@ -50,11 +50,11 @@ const Row: React.FC<Props> = ({ category, services }) => {
                             <Table aria-label="purchases" style={{padding: 0}}>
                                 <TableBody>
                                     {services.map((service) => (
-                                        <TableRow key={service.name} className={classes.lastRow}>
+                                        <TableRow key={service.title} className={classes.lastRow}>
                                             <TableCell align="left" style={{width: '30px'}}/>
                                             <TableCell align="left" style={{width: '180px'}}/>
                                             <TableCell>
-                                                {service.name}
+                                                {service.title}
                                             </TableCell>
                                             <TableCell align="right">{`${service.price} zł`}</TableCell>
                                         </TableRow>

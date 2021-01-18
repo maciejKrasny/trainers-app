@@ -1,4 +1,12 @@
-import { User, SET_USERS, UserActions, ADD_USER, SET_USER_PENDING } from "./types";
+import {
+    MostPopularUser,
+    SET_MOST_POPULAR_USERS,
+    SET_USER_PENDING,
+    SET_USERS,
+    TO_OBSERVED,
+    User,
+    UserActions
+} from "./types";
 
 export function setUsers(data: User[]): UserActions {
     return {
@@ -7,9 +15,9 @@ export function setUsers(data: User[]): UserActions {
     };
 }
 
-export function addUser(data: User): UserActions {
+export function setMostPopularUsers(data: MostPopularUser[]): UserActions {
     return {
-        type: ADD_USER,
+        type: SET_MOST_POPULAR_USERS,
         payload: data
     };
 }
@@ -17,6 +25,13 @@ export function addUser(data: User): UserActions {
 export function setPending(data: boolean): UserActions {
     return {
         type: SET_USER_PENDING,
-        payload: data
+        payload: data,
     };
+}
+
+export function toObserved(data: string): UserActions {
+    return {
+        type: TO_OBSERVED,
+        payload: data,
+    }
 }

@@ -1,13 +1,11 @@
 import React from "react";
-import { createStyles, Fade, makeStyles, Modal as MaterialModal, Theme, Backdrop } from '@material-ui/core';
-import ModalSignInBody from "./ModalSignInBody";
-import ModalSignUpBody from "./ModalSignUpBody";
-import ModalEditInfo from "./ModalEditInfo";
-import ModalEditService from "./ModalEditService";
-import { Service } from "../../../redux/modules/Services/types";
+import {Backdrop, createStyles, Fade, makeStyles, Modal as MaterialModal} from '@material-ui/core';
+import {Service} from "../../../redux/modules/Services/types";
 import ModalReportBody from "./ModalReportBody";
+import ModalSignUpBody from "./ModalSignUpBody";
+import ModalSignInBody from "./ModalSignInBody";
 
-export type ModalType = '' | 'signIn' | 'signUp' | 'report';
+export type ModalType = '' | 'report' | 'signIn' | 'signUp';
 
 interface ModalProps {
     type: ModalType;

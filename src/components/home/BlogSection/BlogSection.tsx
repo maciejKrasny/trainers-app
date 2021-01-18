@@ -1,24 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { User } from '../../../redux/modules/Users/types';
-import EditorContainer from '../Editor/Editor.container';
+import {useSelector} from 'react-redux';
+import {User} from '../../../redux/modules/Users/types';
 import PostCard from "../PostCard/PostCard";
 
 interface BlogSectionProps {
-    user?: User;
+    userId?: string;
 }
 
-const BlogSection: React.FC<BlogSectionProps> = ({ user }) => {
+const BlogSection: React.FC<BlogSectionProps> = ({ userId }) => {
     const { posts } = useSelector(state => state.posts)
-    const { currentAuthorizationUser } = useSelector(state => state.authorizationUsers)
-
     return (
         <div style={{padding: '1.5rem'}}>
-            {posts.filter(post => post.creator === user?.id).length
-                ? posts.filter(post => post.creator === user?.id).reverse().map(post => (
+            {posts.filter(post => post.author._id === userId).length
+                ? posts.filter(post => post.author._id === userId).reverse().map(post => (
                     <PostCard
-                        key={post.id}
-                        id={post.id}
+                        key={post._id}
+                        id={post._id}
                         title={post.title}
                         content={post.content}
                         image={"a"}

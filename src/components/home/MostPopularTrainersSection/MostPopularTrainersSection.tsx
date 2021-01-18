@@ -11,12 +11,15 @@ const MostPopularTrainersSection: React.FC = () => {
             <MostPopularTrainersTitle variant="h5" >NAJPOPULARNIEJSI TRENERZY</MostPopularTrainersTitle>
             <MostPopularTrainersDescription>Znajdź wśród nich swojego mentora</MostPopularTrainersDescription>
             <MostPopularTrainersGrid>
-                {users.map(user => (
+                {users?.map(user => (
                     <MostPopularTrainersCard
-                        id={user.id}
-                        name={`${user.name} ${user.surname}`}
-                        location={user.city}
-                        initials={`${user.name[0]}${user.surname[0]}`}
+                        id={user._id}
+                        name={`${user.userDetails.firstName} ${user.userDetails.lastName}`}
+                        location={user.userDetails.city || ''}
+                        initials={`${user.userDetails.firstName[0]}${user.userDetails.lastName[0]}`}
+                        reviewCreator={'Maciej Kraśny'}
+                        reviewContent={"dfsfsdfsd fsdf sdf sdf sdf sdf sdf sdf sdsdfsdfwerwef "}
+                        reviewRating={4.5}
                     />
                 ))}
             </MostPopularTrainersGrid>

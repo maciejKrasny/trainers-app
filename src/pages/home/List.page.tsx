@@ -1,44 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import FilterSection from '../../components/home/FilterSection/FilterSection';
-import { GridContainer } from '../../components/home/Grid/Grid.styled';
+import React, {useEffect, useState} from 'react'
+import {useSelector} from 'react-redux';
+import {GridContainer} from '../../components/home/Grid/Grid.styled';
 import Layout from '../../components/home/Layout/Layout'
-import TrainerCard from '../../components/home/TrainerCard/TrainerCard';
-import { User } from '../../redux/modules/Users/types';
-import MostPopularTrainersSection from '../../components/home/MostPopularTrainersSection/MostPopularTrainersSection';
-import RegisterSection from "../../components/home/RegisterSection/RegisterSection";
 import TrainersListSection from "../../components/home/TrainersListSection/TrainersListSection";
 import FilterListSection from "../../components/home/FilterListSection/FilterListSection";
 import useQuery from "../../utils/hooks/useUrlQuery";
-import {useHistory, useLocation} from "react-router-dom";
-import queryString from 'querystring';
+import {useHistory} from "react-router-dom";
+import {User} from "../../redux/modules/Users/types";
+import {Button} from "@material-ui/core";
+import * as trainerThunks from '../../redux/modules/Users/thunks';
 
-const filterByCity = (users: User[], city: string) => {
-    return users.filter(user => user.city === city);
+const filterByCity = (trainers: User[], city: string) => {
+    return trainers.filter(trainer => trainer.userDetails.city === city);
 }
 
-const filterBySpecializations = (users: User[], specializations: string[]) => {
-    return users.filter(user =>
+const filterBySpecializations = (trainers: User[], specializations: string[]) => {
+    return trainers.filter(trainer =>
         specializations.every(specialization =>
-            user.specializations.includes(specialization)));
+            trainer.specializations?.includes(specialization)));
 }
 
+const filterByRating = (users: User[], rating: number) => {
+    return users.filter(user => (user.reviewsSummary.averageGrade || 0) >= rating);
+}
 
-const filterUsers = (users: User[], city: string, specializations: string[]) => {
+const filterTrainers = (users: User[], city: string, specializations: string[], rating: number) => {
+    const trainers = users.filter(user => user.type === "TRAINER");
+    const filteredTrainers = filterByRating(trainers, rating);
     if (city && specializations.length) {
-        const filteredUsersByCity = filterByCity(users, city);
+        const filteredUsersByCity = filterByCity(filteredTrainers, city);
         return filterBySpecializations(filteredUsersByCity, specializations);
     }
 
     if (city) {
-        return filterByCity(users, city);
+        return filterByCity(filteredTrainers, city);
     }
 
     if (specializations.length) {
-        return filterBySpecializations(users, specializations);
+        return filterBySpecializations(filteredTrainers, specializations);
     }
 
-    return users;
+    return filteredTrainers;
 }
 
 const ListPage: React.FC = () => {
@@ -47,15 +49,19 @@ const ListPage: React.FC = () => {
 
     const [city, setCity] = useState<string>('');
     const [specializations, setSpecializations] = useState<string[]>([]);
+    const [rating, setRating] = useState<number>(0);
 
+    useEffect(() => {
+        trainerThunks.fetchUsers();
+    }, [])
     const query = useQuery();
     const handleOnChangeCity = (selectedCity: string | null) => {
-        if (specializations.length) {
+        if (specializations.length || rating) {
             const specsString = specializations.join(',').trim();
 
             history.push({
                 pathname: 'trenerzy',
-                search: `miasto=${selectedCity || ''}&aktywnosci=${specsString}`
+                search: `miasto=${selectedCity || ''}&aktywnosci=${specsString}&ocena=${rating}`
             })
         } else {
             history.push({
@@ -67,10 +73,10 @@ const ListPage: React.FC = () => {
 
     const handleOnChangeSpec = (specs: string[]) => {
         const specsString = specs.join(',').trim();
-        if (city) {
+        if (city || rating) {
             history.push({
                 pathname: 'trenerzy',
-                search: `miasto=${city}&aktywnosci=${specsString}`
+                search: `miasto=${city}&aktywnosci=${specsString}&ocena=${rating}`
             })
         } else {
             history.push({
@@ -79,20 +85,37 @@ const ListPage: React.FC = () => {
             })
         }
     }
+
+    const handleOnChangeRating = (value: number) => {
+        const specsString = specs.join(',').trim();
+        if (city || specializations.length) {
+            history.push({
+                pathname: 'trenerzy',
+                search: `miasto=${city}&aktywnosci=${specsString}&ocena=${value}`
+            })
+        } else {
+            history.push({
+                pathname: 'trenerzy',
+                search: `ocena=${value}`
+            })
+        }
+    }
     const queryCity = query.get("miasto");
     const querySpec = query.get("aktywnosci")
-    console.log(querySpec)
+    const queryRating = query.get("ocena")
+
     const specs: string[] = querySpec ? querySpec.split(',') : [];
     useEffect(() => {
         setCity(queryCity || '');
         setSpecializations(specs);
-    }, [queryCity, specs?.length]);
+        setRating(parseInt(queryRating || '0'));
+    }, [queryCity, specs?.length, queryRating]);
 
     return (
         <Layout>
             <GridContainer style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <TrainersListSection trainers={filterUsers(users, city, specializations)} />
-                <FilterListSection city={city} specializations={specializations} onChangeCity={handleOnChangeCity} onChangeSpecialization={handleOnChangeSpec} />
+                <TrainersListSection trainers={filterTrainers(users, city, specializations, rating)} />
+                <FilterListSection onChangeRating={handleOnChangeRating} rating={rating} city={city} specializations={specializations} onChangeCity={handleOnChangeCity} onChangeSpecialization={handleOnChangeSpec} />
             </GridContainer>
         </Layout>
     )

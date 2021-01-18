@@ -84,3 +84,10 @@ export const InfoRow = styled.div`
   padding-bottom: 0.25rem;
   color: ${({theme}) => theme.colors.darkGrey02}
 `;
+
+export const ObserveContainer = styled.div`
+  position: relative;      
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;

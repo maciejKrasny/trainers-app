@@ -5,7 +5,6 @@ import {Typography} from "@material-ui/core";
 import {hexToRGB, remCalc} from "../../../utils/styles/utils";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {deepOrange} from "@material-ui/core/colors";
-import {ArrowDropDown} from "@material-ui/icons";
 
 export const BackgroundContainer = styled.div<{isSticky?: boolean}>`
   position: ${({isSticky}) => isSticky ? 'sticky' : 'fixed'};
@@ -36,6 +35,7 @@ export const Logo = styled(Link)`
 export const ActionContainer = styled.div`
   display: flex;
   color: white;
+  align-items: center;
 `;
 
 export const Action = styled(Typography)`
@@ -63,4 +63,17 @@ export const useStyles = makeStyles((theme: Theme) =>
 
 export const AvatarContainer = styled.div`
   position: relative;
+`;
+
+export const StyledLink = styled(Link)<{isLogin: boolean}>`
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  margin-right: 1rem;
+  font-size: 1rem;
+  color: ${({theme}) => theme.colors.white};
+  :hover {
+    color: #E0E0E0;
+  }
+  transition: ${({theme}) => theme.transition};
 `;

@@ -38,10 +38,10 @@ const ReviewCard: React.FC<ReviewCardProps> = ({name, content,rating, surname, l
             </DetailsContainer>
             <CardContent>
                 <Typography color="textPrimary">Ocena</Typography>
-                <Rating value={rating} style={{marginLeft: -2}} />
+                <Rating value={rating} style={{marginLeft: -2}} readOnly/>
                 <Typography color="textPrimary">Recenzja</Typography>
                 <Typography color="textSecondary">
-                    {isReadMoreOpen ? content : `${shorterContent}...`}
+                    {isReadMoreOpen && content.length > 300 ? content : `${shorterContent}`}
                     {content.length > 300 && <ReadMore onClick={() => setIsReadMoreOpen(!isReadMoreOpen)}>{isReadMoreOpen ? "Pokaż mniej" : "Pokaż więcej"}</ReadMore>}
                 </Typography>
             </CardContent>

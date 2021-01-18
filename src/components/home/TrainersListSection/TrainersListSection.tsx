@@ -8,19 +8,22 @@ interface TrainersListSectionProps {
 }
 
 const TrainersListSection: React.FC<TrainersListSectionProps> = ({ trainers }) => {
+
     return (
         <ListContainer>
-            {trainers.map(user => (
+            {trainers.length ? (trainers.map(trainer => (
                     <TrainerCard
-                        id={user.id}
-                        name={`${user.name} ${user.surname}`}
-                        description={user.shortDescription}
-                        specializations={user.specializations}
-                        location={user.city}
-                        initials={`${user.name[0]}${user.surname[0]}`}
-
+                        id={trainer._id}
+                        name={`${trainer.userDetails.firstName} ${trainer.userDetails.lastName}`}
+                        description={trainer.userDetails.description || ''}
+                        specializations={trainer.specializations || []}
+                        location={trainer.userDetails.city || ''}
+                        initials={`${trainer.userDetails.firstName[0]}${trainer.userDetails.lastName[0]}`}
+                        rating={trainer.reviewsSummary.averageGrade || 0}
                     />
-                ))}
+                )))
+            : <p style={{display: 'flex', justifyContent: 'center'}}>Brak trenerów</p>
+            }
         </ListContainer>
     );
 }

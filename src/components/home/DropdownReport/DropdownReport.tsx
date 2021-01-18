@@ -12,7 +12,7 @@ interface DropdownReportProps {
 }
 
 const DropdownReport: React.FC<DropdownReportProps> = ({  }) => {
-    const { currentAuthorizationUser } = useSelector(state => state.authorizationUsers);
+    const { authorization } = useSelector(state => state.authorizationUsers);
     const dropdownWrapper = React.useRef<HTMLDivElement>(null);
 
     const [isOpen, setIsOpen] = React.useState(false);
@@ -30,7 +30,7 @@ const DropdownReport: React.FC<DropdownReportProps> = ({  }) => {
 
     return (
         <Wrapper ref={dropdownWrapper}>
-            {currentAuthorizationUser?.userId &&
+            {authorization?.user._id &&
                 <>
                     <DropdownButton type="button" onKeyDown={handleActivatorClick} onClick={handleActivatorClick}>
                         <StyledIconButton>

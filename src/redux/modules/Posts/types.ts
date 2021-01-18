@@ -1,28 +1,29 @@
+import {User} from "../Users/types";
+
 export interface Comment {
-    id: string;
-    creator: number;
+    _id: string;
+    author: User;
     content: string;
     postId: string;
 }
 
 export interface Post {
-    id: string;
+    _id: string;
     title: string;
-    creator: number;
+    author: User;
     content: string;
     comments?: Comment[];
-    type: "POST" | "EVENT";
 }
 
 export interface PostsState {
     posts: Post[];
-    currentPost: Post | null,
+    observePosts: Post[];
     pending: boolean;
 }
 
 export const SET_POSTS = 'SET_POSTS';
-export const SET_CURRENT_POST = 'SET_CURRENT_POST';
-export const ADD_POST = 'ADD_POST';
+export const SET_OBSERVE_POSTS = 'SET_OBSERVE_POSTS';
+export const ADD_COMMENT = 'ADD_COMMENT';
 export const SET_POST_PENDING = 'SET_POST_PENDING';
 
 export interface SetPostsAction {
@@ -30,19 +31,19 @@ export interface SetPostsAction {
     payload: Post[];
 }
 
-export interface SetCurrentPostAction {
-    type: typeof SET_CURRENT_POST;
-    payload: Post;
-}
-
-export interface AddPostAction {
-    type: typeof ADD_POST;
-    payload: Post;
-}
-
 export interface SetPostPending {
     type: typeof SET_POST_PENDING;
     payload: boolean;
 }
 
-export type PostActions = SetPostsAction | AddPostAction | SetPostPending | SetCurrentPostAction;
+export interface AddCommentAction {
+    type: typeof ADD_COMMENT;
+    payload: Comment;
+}
+
+export interface SetObservePostsAction {
+    type: typeof SET_OBSERVE_POSTS;
+    payload: Post[];
+}
+
+export type PostActions = SetPostsAction | SetPostPending | AddCommentAction | SetObservePostsAction;

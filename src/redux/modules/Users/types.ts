@@ -1,21 +1,39 @@
+export type UserType = 'TRAINER' | 'USER' | 'ADMIN';
+
+export interface UserDetails {
+    city?: string;
+    description?: string;
+    phone?: number;
+    firstName: string;
+    lastName: string;
+    isObserved?: boolean;
+
+}
+
+export interface MostPopularUser {
+    _id: string;
+}
+
 export interface User {
-    id: number;
-    name: string;
-    surname: string;
-    city: string;
-    nrPhone: number;
-    email: string;
-    specializations: string[];
-    shortDescription: string;
+    _id: string;
+    type: UserType;
+    email?: string;
+    specializations?: string[];
+    userDetails: UserDetails;
+    reviewsSummary: {
+        averageGrade: number;
+    }
 }
 
 export interface UserState {
     users: User[];
+    mostPopularUsers: MostPopularUser[];
     pending: boolean;
 }
 
 export const SET_USERS = 'SET_USERS';
-export const ADD_USER = 'ADD_USER';
+export const SET_MOST_POPULAR_USERS = 'SET_MOST_POPULAR_USERS';
+export const TO_OBSERVED = 'TO_OBSERVED';
 export const SET_USER_PENDING = 'SET_USER_PENDING';
 
 export interface SetUsersAction {
@@ -23,14 +41,20 @@ export interface SetUsersAction {
     payload: User[];
 }
 
-export interface AddUserAction {
-    type: typeof ADD_USER;
-    payload: User;
-}
-
 export interface SetUserPending {
     type: typeof SET_USER_PENDING;
     payload: boolean;
 }
 
-export type UserActions = SetUsersAction | AddUserAction | SetUserPending;
+export interface ToObservedAction {
+    type: typeof TO_OBSERVED;
+    payload: string;
+}
+
+export interface SetMostPopularUsersAction {
+    type: typeof SET_MOST_POPULAR_USERS;
+    payload: MostPopularUser[];
+}
+
+
+export type UserActions = SetUsersAction | SetUserPending | ToObservedAction | SetMostPopularUsersAction;

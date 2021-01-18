@@ -1,23 +1,24 @@
-import { Reducer } from 'redux';
+import {Reducer} from 'redux';
 import initialState from './state';
-import { AuthorizationActions, AuthorizationState, CLEAR_CURRENT_AUTHORIZATION_USER, SET_AUTHORIZATION_USERS, SET_AUTHORIZATION_USER_PENDING, SET_CURRENT_AUTHORIZATION_USER } from './types';
+import {
+    AuthorizationActions,
+    AuthorizationState,
+    CLEAR_CURRENT_AUTHORIZATION_USER,
+    SET_AUTHORIZATION_USER,
+    SET_AUTHORIZATION_USER_PENDING
+} from './types';
 
 const userReducer: Reducer<AuthorizationState, AuthorizationActions> = (state = initialState, action) => {
     switch (action.type) {
-        case SET_AUTHORIZATION_USERS:
+        case SET_AUTHORIZATION_USER:
             return {
                 ...state,
-                authorizationUsers: action.payload,
-            };
-        case SET_CURRENT_AUTHORIZATION_USER:
-            return {
-                ...state,
-                currentAuthorizationUser: action.payload,
+                authorization: action.payload,
             };
         case CLEAR_CURRENT_AUTHORIZATION_USER:
             return {
                 ...state,
-                currentAuthorizationUser: undefined,
+                authorization: undefined,
             };
         case SET_AUTHORIZATION_USER_PENDING:
             return {

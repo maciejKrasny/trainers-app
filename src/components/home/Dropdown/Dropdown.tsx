@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Dropdown: React.FC<Props> = ({ children, activator }) => {
-    const { currentAuthorizationUser } = useSelector(state => state.authorizationUsers);
+    const { authorization } = useSelector(state => state.authorizationUsers);
     const dropdownWrapper = React.useRef<HTMLDivElement>(null);
     const history = useHistory();
     const dispatch = useDispatch();
@@ -33,8 +33,11 @@ const Dropdown: React.FC<Props> = ({ children, activator }) => {
             </DropdownButton>
             <DropdownContainer isOpen={isOpen}>
                 <>
-                    <DropdownAction onClick={() => history.push(`/${currentAuthorizationUser?.userId}`)}>
+                    <DropdownAction onClick={() => history.push(`/${authorization?.user._id}`)}>
                         <Typography>Profil</Typography>
+                    </DropdownAction>
+                    <DropdownAction onClick={() => history.push(`/${authorization?.user._id}`)}>
+                        <Typography>Panel administratora</Typography>
                     </DropdownAction>
                     <DropdownAction onClick={() => { dispatch(authorizationThunks.clearCurrentAuthorizationUser()); setIsOpen(false)}}>
                         <Typography>Wyloguj się</Typography>

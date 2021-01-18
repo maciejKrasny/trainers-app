@@ -39,4 +39,5 @@ export const AddReviewLabel = styled(Typography)`
 
 export const ReviewsContainer = styled.div`
   padding: 1.5rem;
+  width: calc(100% - 3rem);
 `;

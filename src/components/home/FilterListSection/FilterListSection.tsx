@@ -8,12 +8,14 @@ import { Rating } from '@material-ui/lab';
 
 interface FilterListSectionProps {
     city: string;
+    rating: number;
     specializations: string[];
     onChangeCity: (value: string) => void;
     onChangeSpecialization: (value: string[]) => void;
+    onChangeRating: (value: number) => void;
 }
 
-const FilterListSection: React.FC<FilterListSectionProps> = ({ city, specializations, onChangeCity, onChangeSpecialization}) => {
+const FilterListSection: React.FC<FilterListSectionProps> = ({ onChangeRating, rating, city, specializations, onChangeCity, onChangeSpecialization}) => {
     return (
         <FilterContainer>
         <Container>
@@ -23,7 +25,7 @@ const FilterListSection: React.FC<FilterListSectionProps> = ({ city, specializat
                 <SpecializationsSelect onChange={onChangeSpecialization} value={specializations} />
             </SpecializationsContainer>
             <Typography style={{marginTop: '-0.5rem', color: 'rgba(0, 0, 0, 0.54)'}} >Ocena</Typography>
-            <Rating style={{marginLeft: '-0.125rem'}}/>
+            <Rating style={{marginLeft: '-0.125rem'}} value={rating} onChange={(_, value) => onChangeRating(value || 0)}/>
             </Container>
         </FilterContainer>
     );

@@ -33,6 +33,7 @@ const CitySelect: React.FC<CitySelectProps> = ({ onChange, value, id, transparen
     return (
         <Autocomplete
             id={id}
+            autoComplete={false}
             classes={transparent ?
                 {
                     paper: classes.paper,
@@ -43,7 +44,7 @@ const CitySelect: React.FC<CitySelectProps> = ({ onChange, value, id, transparen
             onChange={handleOnChange}
             options={cities}
             getOptionLabel={(option: any) => option}
-            renderInput={(params: any) => <TextField {...params} size="small" label="Miasto" variant="outlined" />}
+            renderInput={(params: any) => <TextField autoComplete={false} {...params} size="small" label="Miasto" variant="outlined" />}
         />
     )
 };

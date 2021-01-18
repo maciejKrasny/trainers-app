@@ -9,21 +9,23 @@ import {
     useStyles,
     DetailsContainer,
     Location,
-    DetailsInfoContainer
+    DetailsInfoContainer,
+    Description
 } from './TrainerCard.styled';
 import { useHistory } from "react-router-dom";
 import {Rating} from "@material-ui/lab";
 
 interface TrainerCardProps {
-    id: number;
+    id: string;
     name: string;
     location: string;
     description: string;
     specializations: string[];
     initials: string;
+    rating: number;
 }
 
-const TrainerCard: React.FC<TrainerCardProps> = ({ id, name, description, specializations, location, initials }) => {
+const TrainerCard: React.FC<TrainerCardProps> = ({ id, name, description, specializations, location, initials, rating }) => {
     const history = useHistory();
     const classes = useStyles();
     return (
@@ -36,10 +38,10 @@ const TrainerCard: React.FC<TrainerCardProps> = ({ id, name, description, specia
                         <Location>{location}</Location>
                     </DetailsInfoContainer>
                 </DetailsContainer>
-                <Rating readOnly value={3}/>
-                <Typography color="textSecondary">
+                <Rating readOnly value={rating}/>
+                <Description color="textSecondary">
                     {description}
-                </Typography>
+                </Description>
                 <SpecializationsContainer>
                     {specializations.map(specialization => (
                         <StyledChip key={specialization} label={specialization} variant="outlined" />

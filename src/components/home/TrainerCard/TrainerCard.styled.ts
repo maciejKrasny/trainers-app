@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card, CardContent, Chip } from '@material-ui/core';
+import {Card, CardContent, Chip, Typography} from '@material-ui/core';
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {deepOrange} from "@material-ui/core/colors";
 
@@ -18,7 +18,7 @@ export const SpecializationsContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 1rem;
-  max-width: 400px;
+  width: 300px;
   margin-right: 2rem;
 `;
 
@@ -47,6 +47,13 @@ export const DetailsInfoContainer = styled.div`
 
 export const Location = styled.div`
   font-size: 1rem;
+`;
+
+export const Description = styled(Typography)`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 export const useStyles = makeStyles((theme: Theme) =>

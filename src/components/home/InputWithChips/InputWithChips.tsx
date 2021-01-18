@@ -31,7 +31,7 @@ const InputWithChips: React.FC<InputWithChipsProps> = ({ value, onChange, option
                 style={{ width: '100%', height: '30' }}
                 filterSelectedOptions
                 onChange={handleOnChange}
-                renderInput={(params: any) => <TextField {...params} size="small" label="Specjalizacja" variant="outlined" />}
+                renderInput={(params: any) => <TextField autoComplete={false} {...params} size="small" label="Specjalizacja" variant="outlined" />}
                 renderTags={(value: string[], getTagProps) =>
                     value.map((option: string, index: number) => (
                         <Chip variant="outlined" label={option} {...getTagProps({ index })} size="small" style={{height: 22}}/>

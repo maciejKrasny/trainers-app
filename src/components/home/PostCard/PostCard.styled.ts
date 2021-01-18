@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
-import {Card, CardActions, IconButton, TextField} from "@material-ui/core";
+import {Button, Card, CardActions, IconButton, TextField} from "@material-ui/core";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {deepOrange} from "@material-ui/core/colors";
 
@@ -31,6 +31,7 @@ export const StyledCard = styled(Card)`
   -moz-transition: all 0.2s ease-in;
   -o-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
+  overflow: unset;
 `;
 
 export const CommnetsContainer = styled.div`
@@ -99,4 +100,28 @@ export const CommentContent = styled.div`
 export const DropdownContainer = styled.div`
     margin-left: auto;
   align-self: flex-end;
+`;
+
+export const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #E0E0E0;
+  padding: 1.25rem 1rem;
+  align-items: center;
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Name = styled.div`
+  font-size: 1.5rem;
+  font-weight: 400;
+`;
+
+export const VisitButton = styled(Button)`
+  display: flex;
+  justify-self: flex-end;
+  margin-left: auto;
 `;
