@@ -1,6 +1,6 @@
 import React from "react"
-import { specializations } from "../../../utils/consts/consts";
 import InputWithChips from "../InputWithChips/InputWithChips";
+import {useSelector} from "react-redux";
 
 interface SpecializationsSelectProps {
     onChange: (value: string[]) => void;
@@ -9,6 +9,8 @@ interface SpecializationsSelectProps {
 }
 
 const SpecializationsSelect: React.FC<SpecializationsSelectProps> = ({ onChange, value, id }) => {
+    const { specializations } = useSelector(state => state.formData);
+
     return (
         <InputWithChips id={id} value={value} options={specializations} onChange={onChange} />
     )

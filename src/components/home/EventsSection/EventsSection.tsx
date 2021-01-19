@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import EventCard from "../EventCard/EventCard";
 import * as eventThunks from "../../../redux/modules/Events/thunks";
 import {CircularProgress} from "@material-ui/core";
+import {useHttpErrorHandler} from "../../../utils/hooks/useHttpErrorHandler";
 
 interface EventsSectionProps {
     userId: string;
@@ -10,13 +11,14 @@ interface EventsSectionProps {
 
 const EventsSection: React.FC<EventsSectionProps> = ({ userId }) => {
     const { events, pending } = useSelector(state => state.events);
+    const handler = useHttpErrorHandler();
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(eventThunks.fetchEvents(userId));
+        dispatch(eventThunks.fetchEvents(userId, handler));
     }, [userId]);
 
     if (pending) {
-        return (<div style={{alignItems: 'center', justifyContent: 'center', padding: '1.5rem'}}>
+        return (<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem'}}>
             <CircularProgress/>
             </div>
         )

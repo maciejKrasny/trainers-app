@@ -18,7 +18,7 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
             const currentTrainerIndex = state.users.findIndex(user => user._id === action.payload);
             const trainers = [...state.users];
             if (currentTrainerIndex !== -1) {
-                trainers[currentTrainerIndex].userDetails.isObserved = !trainers[currentTrainerIndex].userDetails.isObserved;
+                trainers[currentTrainerIndex].isObserved = !trainers[currentTrainerIndex].isObserved;
             }
             return {
                 ...state,

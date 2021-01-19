@@ -6,8 +6,6 @@ export interface UserDetails {
     phone?: number;
     firstName: string;
     lastName: string;
-    isObserved?: boolean;
-
 }
 
 export interface MostPopularUser {
@@ -17,6 +15,7 @@ export interface MostPopularUser {
 export interface User {
     _id: string;
     type: UserType;
+    isObserved?: boolean;
     email?: string;
     specializations?: string[];
     userDetails: UserDetails;

@@ -33,9 +33,12 @@ const Dropdown: React.FC<Props> = ({ children, activator }) => {
             </DropdownButton>
             <DropdownContainer isOpen={isOpen}>
                 <>
-                    <DropdownAction onClick={() => history.push(`/${authorization?.user._id}`)}>
-                        <Typography>Profil</Typography>
+                    <DropdownAction onClick={() => history.push(`/`)}>
+                        <Typography>Strona główna</Typography>
                     </DropdownAction>
+                    {authorization?.user.type === 'TRAINER' && (<DropdownAction onClick={() => history.push(`/${authorization?.user._id}`)}>
+                        <Typography>Profil</Typography>
+                    </DropdownAction>)}
                     <DropdownAction onClick={() => history.push(`/${authorization?.user._id}`)}>
                         <Typography>Panel administratora</Typography>
                     </DropdownAction>

@@ -2,9 +2,17 @@ import {
     AuthorizationActions,
     AuthorizationUser,
     CLEAR_CURRENT_AUTHORIZATION_USER,
-    SET_AUTHORIZATION_USER_PENDING,
     SET_AUTHORIZATION_USER,
+    SET_AUTHORIZATION_USER_PENDING,
+    SET_ERROR,
 } from "./types";
+
+export function setError(data: boolean): AuthorizationActions {
+    return {
+        type: SET_ERROR,
+        payload: data,
+    };
+}
 
 export function setAuthorizationUser(data: AuthorizationUser): AuthorizationActions {
     return {

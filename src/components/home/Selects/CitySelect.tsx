@@ -1,10 +1,9 @@
-import { TextField } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import {TextField} from "@material-ui/core";
+import {Autocomplete} from "@material-ui/lab";
 import React from "react"
-import { specializations as mockedSpecializations, cities } from '../../../utils/consts/consts';
-import { StyledAutocomplete } from "./Select.styled";
 import {hexToRGB} from "../../../utils/styles/utils";
 import {makeStyles} from "@material-ui/core/styles";
+import {useSelector} from "react-redux";
 
 interface CitySelectProps {
     onChange: (newValue: string) => void;
@@ -24,6 +23,7 @@ const useStyles = makeStyles({
 });
 
 const CitySelect: React.FC<CitySelectProps> = ({ onChange, value, id, transparent= true }) => {
+    const { cities } = useSelector(state => state.formData);
     const classes = useStyles();
 
     const handleOnChange = (_: React.ChangeEvent<{}>, newValue: any) => {
@@ -33,7 +33,6 @@ const CitySelect: React.FC<CitySelectProps> = ({ onChange, value, id, transparen
     return (
         <Autocomplete
             id={id}
-            autoComplete={false}
             classes={transparent ?
                 {
                     paper: classes.paper,
@@ -43,6 +42,7 @@ const CitySelect: React.FC<CitySelectProps> = ({ onChange, value, id, transparen
             value={value}
             onChange={handleOnChange}
             options={cities}
+            autoComplete={false}
             getOptionLabel={(option: any) => option}
             renderInput={(params: any) => <TextField autoComplete={false} {...params} size="small" label="Miasto" variant="outlined" />}
         />

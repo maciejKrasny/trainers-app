@@ -12,6 +12,7 @@ import {Service} from "../../../redux/modules/Services/types";
 import Row from "./Row";
 import {CircularProgress} from "@material-ui/core";
 import * as serviceThunks from "../../../redux/modules/Services/thunks";
+import {useHttpErrorHandler} from "../../../utils/hooks/useHttpErrorHandler";
 
 interface PriceListProps {
     userId: string;
@@ -32,8 +33,10 @@ const PriceList: React.FC<PriceListProps> = ({ userId }) => {
         }, {});
     }, [userId, services]);
 
+    const handler = useHttpErrorHandler();
+
     useEffect(() => {
-        dispatch(serviceThunks.fetchServices(userId));
+        dispatch(serviceThunks.fetchServices(userId, handler));
     }, [userId])
 
     if (pending) {

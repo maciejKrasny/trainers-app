@@ -5,7 +5,8 @@ import {
     AuthorizationState,
     CLEAR_CURRENT_AUTHORIZATION_USER,
     SET_AUTHORIZATION_USER,
-    SET_AUTHORIZATION_USER_PENDING
+    SET_AUTHORIZATION_USER_PENDING,
+    SET_ERROR
 } from './types';
 
 const userReducer: Reducer<AuthorizationState, AuthorizationActions> = (state = initialState, action) => {
@@ -24,6 +25,11 @@ const userReducer: Reducer<AuthorizationState, AuthorizationActions> = (state = 
             return {
                 ...state,
                 pending: action.payload,
+            };
+        case SET_ERROR:
+            return {
+                ...state,
+                error: action.payload,
             };
         default:
             return state;

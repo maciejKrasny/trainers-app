@@ -5,13 +5,20 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { BodyContainer, LoadingBody } from "./Modal.styled";
 import * as authorizationThunk from '../../../redux/modules/Authorization/thunks';
+import {setError} from "../../../redux/modules/Authorization/actions";
+import * as yup from "yup";
 
 interface ModalSignInBodyProps {
     onClose: () => void;
 }
 
+const singInUserSchema = yup.object({
+    email: yup.string().email().required(),
+    password: yup.string().min(1).required(),
+}).defined();
+
 const ModalSignInBody: React.FC<ModalSignInBodyProps> = ({ onClose }) => {
-    const { authorization, pending } = useSelector(state => state.authorizationUsers);
+    const { authorization, pending, error } = useSelector(state => state.authorizationUsers);
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -21,6 +28,14 @@ const ModalSignInBody: React.FC<ModalSignInBodyProps> = ({ onClose }) => {
         validateOnChange: false,
 
         onSubmit: () => handleOnSubmit(),
+        validate: (values) => {
+            const erros: any = {};
+            if (!singInUserSchema.isValidSync(values)) {
+                erros.email = 'error';
+            }
+            return erros;
+        }
+
     });
 
     const { values, handleChange, handleSubmit, errors } = formik;
@@ -39,7 +54,7 @@ const ModalSignInBody: React.FC<ModalSignInBodyProps> = ({ onClose }) => {
     return (
         <BodyContainer onSubmit={handleSubmit}>
             <Typography style={{marginBottom: '1rem'}} variant="h4">Logowanie</Typography>
-            {errors.email && <Alert severity="error">Błędna nazwa użytkownika lub hasło</Alert>}
+            {(error || errors.email) && <Alert severity="error">Błędna email lub hasło</Alert>}
             <TextField
                 id="email"
                 label="Email"

@@ -16,13 +16,34 @@ import CitySelect from "../Selects/CitySelect";
 import SpecializationsSelect from "../Selects/SpecializationsSelect";
 import {BodyContainer, LoadingBody, SelectContainer} from "./Modal.styled";
 import * as authorizationThunk from '../../../redux/modules/Authorization/thunks';
+import * as yup from 'yup';
+import {setError} from "../../../redux/modules/Authorization/actions";
 
 interface ModalSignUpBodyProps {
     onClose: () => void;
 }
 
+const singUpTrainerSchema = yup.object({
+    email: yup.string().email().required(),
+    type: yup.string().required(),
+    password: yup.string().min(1).required(),
+    city: yup.string().required(),
+    surname: yup.string().required(),
+    name: yup.string().required(),
+    phone: yup.number().required(),
+    specializations: yup.array().of(yup.string()).min(1)
+}).defined();
+
+const singUpUserSchema = yup.object({
+    email: yup.string().email().required(),
+    type: yup.string().required(),
+    password: yup.string().min(1).required(),
+    surname: yup.string().required(),
+    name: yup.string().required(),
+}).defined();
+
 const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
-    const { authorization, pending } = useSelector(state => state.authorizationUsers);
+    const { authorization, pending, error } = useSelector(state => state.authorizationUsers);
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -37,8 +58,17 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
         },
         validateOnBlur: false,
         validateOnChange: false,
-        onSubmit: () => handleSignUp()
-    });
+        onSubmit: () => handleSignUp(),
+        validate: (values) => {
+            const errors: any = {};
+            if (values.type === 'TRAINER' && !singUpTrainerSchema.isValidSync(values)) {
+                errors.email = 'error';
+            }
+            if (values.type === 'USER' && !singUpUserSchema.isValidSync(values)) {
+                errors.email = 'error';
+            }
+            return errors;
+        }});
 
     const { values, handleChange, handleSubmit, errors } = formik;
 
@@ -73,6 +103,7 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
     useEffect(() => {
         if (authorization?.token && !pending) {
             onClose();
+            dispatch(setError(false));
         }
     }, [authorization?.token, pending])
 
@@ -101,7 +132,7 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
     return (
         <BodyContainer onSubmit={handleSubmit} >
             <Typography variant="h4">Rejestracja</Typography>
-            {errors.email && <Alert severity="error">Błędna nazwa użytkownika lub hasło</Alert>}
+            {(error || errors.email) && <Alert severity="error">Błędne dane</Alert>}
             <TextField
                 id="email"
                 label="E-mail"
@@ -145,6 +176,7 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
                         value={values.nrPhone}
                         type="number"
                         margin="normal"
+                        fullWidth
                     />
                     <SelectContainer>
                         <CitySelect id="city" onChange={handleOnChangeCity} value={values.city} />

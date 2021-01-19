@@ -1,7 +1,7 @@
 import {AppThunk} from '../../store/store.types';
 import {
     clearCurrentAuthorizationUser as clearCurrentAuthorizationUserAction, setAuthorizationUser,
-    setAuthorizationUserPending,
+    setAuthorizationUserPending, setError,
 } from './actions';
 import {AuthorizationUser} from './types';
 import {
@@ -33,10 +33,13 @@ export const login = (user: {email: string; password: string}): AppThunk<Promise
         const data: AuthorizationUser = await response.json();
         if (data) {
             dispatch(setAuthorizationUser(data));
+            dispatch(setError(false));
             saveAuthorizationUserInLocalStorage(data);
         }
 
-    } catch (e) {}
+    } catch (e) {
+        dispatch(setError(true));
+    }
     dispatch(setAuthorizationUserPending(false));
 };
 
@@ -63,10 +66,13 @@ export const register = (newUser: RegisterUser): AppThunk<Promise<void>> => asyn
         const data: AuthorizationUser = await response.json();
         if (data) {
             dispatch(setAuthorizationUser(data));
+            dispatch(setError(false));
             saveAuthorizationUserInLocalStorage(data);
         }
 
-    } catch (e) {}
+    } catch (e) {
+        dispatch(setError(true));
+    }
     dispatch(setAuthorizationUserPending(false));
 };
 

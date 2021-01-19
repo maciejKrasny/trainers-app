@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import {HeaderContainer, Logo, BackgroundContainer, ActionContainer, Action, useStyles, StyledLink} from './Header.styled';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Dropdown from '../Dropdown/Dropdown';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import logo from './logo.png';
 import Modal, {ModalType} from "../Modal/Modal";
 import useOnClickOutside from "../../../utils/hooks/useOnClickOutside";
@@ -11,6 +11,7 @@ import {Wrapper} from "../Dropdown/Dropdown.styled";
 import {User} from "../../../redux/modules/Users/types";
 import {KeyboardArrowLeft} from "@material-ui/icons";
 import { Link } from 'react-router-dom';
+import {setError} from "../../../redux/modules/Authorization/actions";
 
 interface HeaderProps {
     isSticky?: boolean;
@@ -18,10 +19,15 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isSticky = true }) => {
     const classes = useStyles();
-
+    const dispatch = useDispatch();
     const { authorization } = useSelector(state => state.authorizationUsers);
 
     const [currentModal, setCurrentModal] = React.useState<ModalType>('');
+
+    const handleOnCloseModal = () => {
+        dispatch(setError(false));
+        setCurrentModal('');
+    }
 
     return (
         <BackgroundContainer isSticky={isSticky}>
@@ -46,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ isSticky = true }) => {
                     )}
                 </div>
             </HeaderContainer>
-            <Modal isOpen={Boolean(currentModal)} type={currentModal} onClose={() => setCurrentModal('')} />
+            <Modal isOpen={Boolean(currentModal)} type={currentModal} onClose={() => handleOnCloseModal()} />
         </BackgroundContainer>
     );
 };

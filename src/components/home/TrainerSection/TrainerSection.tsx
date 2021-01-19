@@ -27,6 +27,7 @@ import UnavailableSite from "./UnavailableSite";
 import * as postThunks from "../../../redux/modules/Posts/thunks";
 import {User} from "../../../redux/modules/Users/types";
 import * as userThunks from '../../../redux/modules/Users/thunks';
+import { useHttpErrorHandler } from '../../../utils/hooks/useHttpErrorHandler';
 
 
 interface TrainerSectionProps {
@@ -46,12 +47,12 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
     const { id } = useParams<{ id: string }>();
     const history = useHistory();
     const dispatch = useDispatch();
-
+    const handler = useHttpErrorHandler()
     useEffect(() => {
         if (id) {
             const trainer = users.filter(trainer => trainer.type === 'TRAINER').find(trainer => trainer._id === id);
             setCurrentTrainer(trainer);
-            dispatch(postThunks.fetchPosts(id));
+            dispatch(postThunks.fetchPosts(id, handler));
         }
     }, [id, users]);
 
@@ -102,7 +103,7 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
                                         {currentTrainer.userDetails.description}
                                     </Typography>
                                     {currentTrainer._id !== authorization?.user._id && !!authorization && (
-                                     <Button style={{position: 'absolute', top: 0, right: 0}} onClick={() => dispatch(userThunks.trainerToObserved(currentTrainer._id))}  variant={currentTrainer.userDetails.isObserved ? 'outlined' : 'contained'} color={'primary'}>{currentTrainer.userDetails.isObserved ? 'Usuń z obserwowanych' : 'Dodaj do obserwowanych'}</Button>
+                                     <Button style={{position: 'absolute', top: 0, right: 0}} onClick={() => dispatch(userThunks.trainerToObserved(currentTrainer._id))}  variant={currentTrainer.isObserved ? 'outlined' : 'contained'} color={'primary'}>{currentTrainer.isObserved ? 'Usuń z obserwowanych' : 'Dodaj do obserwowanych'}</Button>
                                     )}
                                     </ObserveContainer>
                                 </UserInfo>

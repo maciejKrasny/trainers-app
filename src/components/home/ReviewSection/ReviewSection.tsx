@@ -12,6 +12,7 @@ import {Rating} from "@material-ui/lab";
 import {useDispatch, useSelector} from "react-redux";
 import ReviewCard from '../ReviewCard/ReviewCard';
 import * as reviewThunks from '../../../redux/modules/Reviews/thunks';
+import {useHttpErrorHandler} from "../../../utils/hooks/useHttpErrorHandler";
 
 interface ReviewSectionProps {
     userId: string;
@@ -24,19 +25,20 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ userId }) => {
     const [reviewValue, setReviewValue] = useState('');
     const [ratingValue, setRatingValue] = useState(0);
     const [error, setError] = useState(false);
+    const handler = useHttpErrorHandler();
 
     const handleOnAdd = () => {
         if (reviewValue && ratingValue) {
             setReviewValue('');
             setRatingValue(0);
-            dispatch(reviewThunks.addReview({ id: userId, grade: ratingValue, content: reviewValue}));
+            dispatch(reviewThunks.addReview({ id: userId, grade: ratingValue, content: reviewValue}, handler));
         } else {
             setError(true);
         }
     }
 
     useEffect(() => {
-        dispatch(reviewThunks.fetchReviews(userId));
+        dispatch(reviewThunks.fetchReviews(userId, handler));
     }, [userId])
 
     if (pending) {

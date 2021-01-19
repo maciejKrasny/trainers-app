@@ -5,10 +5,16 @@ import { GridContainer } from '../../components/home/Grid/Grid.styled';
 import Layout from '../../components/home/Layout/Layout'
 import MostPopularTrainersSection from '../../components/home/MostPopularTrainersSection/MostPopularTrainersSection';
 import RegisterSection from "../../components/home/RegisterSection/RegisterSection";
+import * as formDataThunks from "../../redux/modules/FormData/thunks";
 
 const LandingPage: React.FC = () => {
     const [city, setCity] = useState<string>('');
     const [specializations, setSpecializations] = useState<string[]>([]);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(formDataThunks.fetchCities());
+        dispatch(formDataThunks.fetchSpecializations());
+    }, []);
 
     return (
         <Layout isSticky={false}>

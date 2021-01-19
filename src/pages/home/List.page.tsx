@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {GridContainer} from '../../components/home/Grid/Grid.styled';
 import Layout from '../../components/home/Layout/Layout'
 import TrainersListSection from "../../components/home/TrainersListSection/TrainersListSection";
@@ -7,8 +7,9 @@ import FilterListSection from "../../components/home/FilterListSection/FilterLis
 import useQuery from "../../utils/hooks/useUrlQuery";
 import {useHistory} from "react-router-dom";
 import {User} from "../../redux/modules/Users/types";
-import {Button} from "@material-ui/core";
 import * as trainerThunks from '../../redux/modules/Users/thunks';
+import {useHttpErrorHandler} from "../../utils/hooks/useHttpErrorHandler";
+import * as formDataThunks from "../../redux/modules/FormData/thunks";
 
 const filterByCity = (trainers: User[], city: string) => {
     return trainers.filter(trainer => trainer.userDetails.city === city);
@@ -50,9 +51,13 @@ const ListPage: React.FC = () => {
     const [city, setCity] = useState<string>('');
     const [specializations, setSpecializations] = useState<string[]>([]);
     const [rating, setRating] = useState<number>(0);
+    const handle = useHttpErrorHandler();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        trainerThunks.fetchUsers();
+        trainerThunks.fetchUsers(handle);
+        dispatch(formDataThunks.fetchCities());
+        dispatch(formDataThunks.fetchSpecializations());
     }, [])
     const query = useQuery();
     const handleOnChangeCity = (selectedCity: string | null) => {

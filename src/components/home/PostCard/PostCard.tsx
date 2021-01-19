@@ -33,12 +33,11 @@ interface PostCardProps {
     image: string;
     id: string;
     comments?: Comment[];
-    currentUserInitials?: string;
     authorName?: string;
     authorSurname?: string;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ authorName, authorSurname, content, title, comments, currentUserInitials, id}) => {
+const PostCard: React.FC<PostCardProps> = ({ authorName, authorSurname, content, title, comments, id}) => {
     const history = useHistory();
     const { authorization } = useSelector(state => state.authorizationUsers);
     const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
@@ -88,7 +87,7 @@ const PostCard: React.FC<PostCardProps> = ({ authorName, authorSurname, content,
             </StyledCardActions>}
             {authorization?.user._id && <CommnetsContainer>
                 <AddCommentContainer>
-                    <Avatar className={classes.avatar}>{currentUserInitials}</Avatar>
+                    <Avatar className={classes.avatar}>{`${authorization.user.userDetails.firstName[0]}${authorization.user.userDetails.lastName[0]}`}</Avatar>
                     <StyledTextField onChange={(event) => setCommentValue(event.target.value)} value={commentValue} placeholder="Napisz komentarz"/>
                     <Button onClick={() => handleOnAdd()} variant="contained" color="primary">Dodaj</Button>
                 </AddCommentContainer>
