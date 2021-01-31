@@ -2,7 +2,7 @@ import { WithPagination } from "../../types";
 import {User} from "../Users/types";
 
 export interface Comment {
-    _id: string;
+    id: string;
     user: User;
     content: string;
     postId: string;

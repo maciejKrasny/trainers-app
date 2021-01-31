@@ -77,7 +77,8 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ userId }) => {
             <ReviewsContainer>
                 {reviews?.reverse().map(review => {
                         return <ReviewCard
-                            id={review._id}
+                            id={review.id}
+                            key={review.id}
                             name={review.user.userDetails.firstName}
                             surname={review.user.userDetails.lastName}
                             rating={review.grade}

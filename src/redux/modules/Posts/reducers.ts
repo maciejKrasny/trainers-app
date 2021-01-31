@@ -31,6 +31,7 @@ const postReducer: Reducer<PostsState, PostActions> = (state = initialState, act
             if (currentPostIndex !== -1) {
                 const posts = [...state.posts];
                 posts[currentPostIndex].comments = action.payload.comments;
+                posts[currentPostIndex].commentsCount = action.payload.comments.length;
                 return {
                     ...state,
                     posts: posts,

@@ -1,7 +1,7 @@
 import {User} from "../Users/types";
 
 export interface Review {
-    _id: string;
+    id: string;
     user: User;
     grade: number;
     content: string;

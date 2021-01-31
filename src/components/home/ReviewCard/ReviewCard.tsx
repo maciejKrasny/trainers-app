@@ -25,7 +25,6 @@ const ReviewCard: React.FC<ReviewCardProps> = ({id, name, content,rating, surnam
     const classes = useStyles();
     const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
     const shorterContent = content.length > 300 ? content.substr(0, 300) : content;
-    console.log(id, 'a')
     return (
         <Card style={{marginTop: '1rem'}}>
             <DetailsContainer >

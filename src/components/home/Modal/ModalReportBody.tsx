@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BodyContainer, LoadingBody, SelectContainer} from "./Modal.styled";
 import {Button, CircularProgress, TextField, Typography} from "@material-ui/core";
 import ReportCategorySelect from "../Selects/ReportCategorySelect";
@@ -8,7 +8,7 @@ import * as yup from "yup";
 import {Alert} from "@material-ui/lab";
 
 interface ModalReportBodyProps {
-    onClose?: () => void;
+    onClose: () => void;
     type?: 'POST' | 'EVENT' | 'COMMENT' | 'REVIEW',
     id?: string;
 }
@@ -44,10 +44,17 @@ const ModalReportBody: React.FC<ModalReportBodyProps> = ({ type, id, onClose}) =
 
     const { values, handleChange, handleSubmit, errors } = formik;
 
-    const handleOnReport = () => {
+    const handleOnReport = async () => {
         setPending(true);
         try {
-            kyClient.post('report', { json: values})
+            const reportData = {
+                objectType: type,
+                objectId: id,
+                category: values.category,
+                description: values.description
+            };
+            await kyClient.post('report', { json: reportData});
+            onClose();
         } catch (e) {
 
         } finally {

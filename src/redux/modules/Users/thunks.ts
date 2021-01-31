@@ -1,5 +1,5 @@
 import { AppThunk } from '../../store/store.types';
-import {toObserved, setPending, setUsers, setMostPopularUsers} from './actions';
+import { setPending, setUsers, setMostPopularUsers, setObserved} from './actions';
 import { User} from './types';
 import kyClient from "../../../api/kyClient";
 
@@ -43,12 +43,27 @@ export const trainerToObserved = (id: string): AppThunk<Promise<void>> => async 
 ) => {
     try {
         const response = await kyClient.post(`trainer/${id}/observe`);
-        const data = await response.json();
+        const data: {observedTrainers: string[]} = await response.json();
         if (data) {
-            dispatch(toObserved(id));
+            dispatch(setObserved(data.observedTrainers));
         }
     } catch (e){
 
     }
 }
 
+export const fetchObservedUsers = (): AppThunk<Promise<void>> => async (
+    dispatch,
+    getState
+) => {
+    dispatch(setPending(true));
+    try {
+        const response = await kyClient.get('user');
+        const data: {observedTrainers: string[]} = await response.json();
+        if (data) {
+            dispatch(setObserved(data.observedTrainers));
+        }
+    } catch (e){}
+
+    dispatch(setPending(false));
+};

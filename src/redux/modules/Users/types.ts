@@ -23,12 +23,14 @@ export interface User {
 export interface UserState {
     users: User[];
     mostPopularUsers: User[];
+    observedUsers: string[];
     pending: boolean;
 }
 
 export const SET_USERS = 'SET_USERS';
 export const SET_MOST_POPULAR_USERS = 'SET_MOST_POPULAR_USERS';
 export const TO_OBSERVED = 'TO_OBSERVED';
+export const SET_OBSERVED = 'SET_OBSERVED';
 export const SET_USER_PENDING = 'SET_USER_PENDING';
 
 export interface SetUsersAction {
@@ -41,10 +43,11 @@ export interface SetUserPending {
     payload: boolean;
 }
 
-export interface ToObservedAction {
-    type: typeof TO_OBSERVED;
-    payload: string;
+export interface SetObservedAction {
+    type: typeof SET_OBSERVED;
+    payload: string[];
 }
+
 
 export interface SetMostPopularUsersAction {
     type: typeof SET_MOST_POPULAR_USERS;
@@ -52,4 +55,4 @@ export interface SetMostPopularUsersAction {
 }
 
 
-export type UserActions = SetUsersAction | SetUserPending | ToObservedAction | SetMostPopularUsersAction;
+export type UserActions = SetUsersAction | SetUserPending | SetMostPopularUsersAction | SetObservedAction;

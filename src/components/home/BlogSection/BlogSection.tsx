@@ -27,7 +27,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ userId }) => {
         return () => {
             dispatch(resetPosts());
         }
-    }, [])
+    }, [id])
 
     return (
         <div style={{padding: '1.5rem'}}>
@@ -46,7 +46,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ userId }) => {
                             />
                         ))}
                         {!pending && postsTotalPages >= postsCurrentPage && (
-                            <Button onClick={handlePostsFetch}>Load more</Button>
+                            <Button onClick={handlePostsFetch}>Załaduj więcej</Button>
                         )}
                     </>
                 )

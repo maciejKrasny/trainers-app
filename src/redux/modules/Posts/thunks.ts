@@ -16,7 +16,7 @@ export const fetchPosts = (currentPage: number, id: string, handler: () => void)
             dispatch(setPosts(data));
         }
     } catch(e){
-        // handler();
+        handler();
     }
 
     dispatch(setPending(false));
@@ -28,9 +28,9 @@ export const addCommentToPost = (data: {postId: string; content: string}): AppTh
 ) => {
     try {
         const response = await kyClient.post(`post/${data.postId}/comments`, {json: {content: data.content}});
-        const comment: Comment = await response.json();
+        const comment: { comments: Comment[] } = await response.json();
         if (comment) {
-            // dispatch(addComment(comment));
+            dispatch(setPostComments({postId: data.postId, comments: comment.comments}));
         }
     } catch (e) {
     }
@@ -62,7 +62,7 @@ export const fetchObservePosts = (currentPage: number, handler: () => void): App
             dispatch(setObservePosts(data));
         }
     } catch(e){
-        // handler();
+        handler();
     }
 
     dispatch(setPending(false));

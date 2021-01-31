@@ -1,8 +1,8 @@
 import {
     SET_MOST_POPULAR_USERS,
+    SET_OBSERVED,
     SET_USER_PENDING,
     SET_USERS,
-    TO_OBSERVED,
     User,
     UserActions
 } from "./types";
@@ -28,9 +28,10 @@ export function setPending(data: boolean): UserActions {
     };
 }
 
-export function toObserved(data: string): UserActions {
+export function setObserved(data: string[]): UserActions {
     return {
-        type: TO_OBSERVED,
+        type: SET_OBSERVED,
         payload: data,
     }
 }
+

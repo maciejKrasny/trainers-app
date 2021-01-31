@@ -37,7 +37,10 @@ interface TrainerSectionProps {
 
 const TrainerSection: React.FC<TrainerSectionProps> = () => {
     const classes = useStyles();
-    const { users, pending: trainersPending } = useSelector(state => state.users);
+    const { users, pending: trainersPending, observedUsers } = useSelector(state => state.users);
+    const { pending: eventsPending } = useSelector(state => state.events);
+    const { pending: postsPending } = useSelector(state => state.posts);
+    const { pending: servicesPending } = useSelector(state => state.services);
     const { authorization } = useSelector(state => state.authorizationUsers);
     const [currentTrainer, setCurrentTrainer] = useState<User>();
     const { url } = useRouteMatch();
@@ -51,6 +54,7 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
         if (id) {
             const trainer = users.filter(trainer => trainer.type === 'TRAINER').find(trainer => trainer._id === id);
             setCurrentTrainer(trainer);
+            dispatch(userThunks.fetchObservedUsers());
         }
     }, [users]);
 
@@ -101,7 +105,7 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
                                         {currentTrainer.userDetails.description}
                                     </Typography>
                                     {currentTrainer._id !== authorization?.user._id && !!authorization && (
-                                     <Button style={{position: 'absolute', top: 0, right: 0}} onClick={() => dispatch(userThunks.trainerToObserved(currentTrainer._id))}  variant={currentTrainer.isObserved ? 'outlined' : 'contained'} color={'primary'}>{currentTrainer.isObserved ? 'Usuń z obserwowanych' : 'Dodaj do obserwowanych'}</Button>
+                                     <Button style={{position: 'absolute', top: 0, right: 0}} onClick={() => dispatch(userThunks.trainerToObserved(currentTrainer._id))}  variant={observedUsers.includes(currentTrainer._id) ? 'outlined' : 'contained'} color={'primary'}>{observedUsers.includes(currentTrainer._id) ? 'Usuń z obserwowanych' : 'Dodaj do obserwowanych'}</Button>
                                     )}
                                     </ObserveContainer>
                                 </UserInfo>

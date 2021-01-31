@@ -101,8 +101,8 @@ const PostCard: React.FC<PostCardProps> = ({ image, commentsCount, authorName, a
                 </AddCommentContainer>
                 {isCommentsOpen && comments?.length && comments.map(comment => {
                     return <CommentComponent
-                        id={comment._id}
-                        key={comment._id}
+                        id={comment.id}
+                        key={comment.id}
                         comment={comment.content}
                         name={comment.user.userDetails.firstName}
                         surname={comment.user.userDetails.lastName}

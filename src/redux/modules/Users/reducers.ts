@@ -1,6 +1,14 @@
 import {Reducer} from 'redux';
 import initialState from './state';
-import {SET_MOST_POPULAR_USERS, SET_USER_PENDING, SET_USERS, TO_OBSERVED, UserActions, UserState} from './types';
+import {
+    SET_MOST_POPULAR_USERS,
+    SET_OBSERVED,
+    SET_USER_PENDING,
+    SET_USERS,
+    TO_OBSERVED,
+    UserActions,
+    UserState
+} from './types';
 
 const userReducer: Reducer<UserState, UserActions> = (state = initialState, action) => {
     switch (action.type) {
@@ -14,16 +22,12 @@ const userReducer: Reducer<UserState, UserActions> = (state = initialState, acti
                 ...state,
                 mostPopularUsers: action.payload,
             };
-        case TO_OBSERVED:
-            const currentTrainerIndex = state.users.findIndex(user => user._id === action.payload);
-            const trainers = [...state.users];
-            if (currentTrainerIndex !== -1) {
-                trainers[currentTrainerIndex].isObserved = !trainers[currentTrainerIndex].isObserved;
-            }
+        case SET_OBSERVED: {
             return {
                 ...state,
-                users: trainers
+                observedUsers: action.payload
             };
+        }
         case SET_USER_PENDING:
             return {
                 ...state,
