@@ -1,6 +1,6 @@
 import {Reducer} from 'redux';
 import initialState from './state';
-import {ADD_COMMENT, PostActions, PostsState, SET_OBSERVE_POSTS, SET_POST_PENDING, SET_POSTS} from './types';
+import {PostActions, PostsState, SET_OBSERVE_POSTS, SET_POST_COMMENTS, SET_POST_PENDING, SET_POSTS} from './types';
 
 const postReducer: Reducer<PostsState, PostActions> = (state = initialState, action) => {
     switch (action.type) {
@@ -14,11 +14,11 @@ const postReducer: Reducer<PostsState, PostActions> = (state = initialState, act
                 ...state,
                 observePosts: action.payload,
             };
-        case ADD_COMMENT: {
+        case SET_POST_COMMENTS: {
             const currentPostIndex = state.posts.findIndex(post => post._id === action.payload.postId);
             if (currentPostIndex !== -1) {
                 const posts = [...state.posts];
-                posts[currentPostIndex].comments = [...(posts[currentPostIndex].comments || []), action.payload];
+                posts[currentPostIndex].comments = action.payload.comments;
                 return {
                     ...state,
                     posts: posts,

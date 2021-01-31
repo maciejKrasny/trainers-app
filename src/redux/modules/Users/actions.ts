@@ -1,5 +1,4 @@
 import {
-    MostPopularUser,
     SET_MOST_POPULAR_USERS,
     SET_USER_PENDING,
     SET_USERS,
@@ -15,7 +14,7 @@ export function setUsers(data: User[]): UserActions {
     };
 }
 
-export function setMostPopularUsers(data: MostPopularUser[]): UserActions {
+export function setMostPopularUsers(data: User[]): UserActions {
     return {
         type: SET_MOST_POPULAR_USERS,
         payload: data

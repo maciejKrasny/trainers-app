@@ -26,9 +26,9 @@ export const addReview = (review: {id: string; grade: number; content: string}, 
 ) => {
     try {
         const response = await kyClient.post(`trainer/${review.id}/reviews`, {json: {grade: review.grade, content: review.content}});
-        const data: Review = await response.json();
+        const data: {reviews: Review[]} = await response.json();
         if (data) {
-            dispatch(addReviewAction(data));
+            dispatch(setReviews(data.reviews));
         }
     } catch (e) {
         handler();

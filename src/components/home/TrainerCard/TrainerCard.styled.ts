@@ -11,6 +11,7 @@ export const StyledCard = styled(Card)`
 
 export const StyledCardContent = styled(CardContent)`
     position: relative;
+    min-height: 164px;
 `;
 
 export const SpecializationsContainer = styled.div`

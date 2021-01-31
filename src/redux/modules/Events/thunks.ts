@@ -2,6 +2,7 @@ import { AppThunk } from '../../store/store.types';
 import {setEventPending, setEvents} from './actions';
 import kyClient from "../../../api/kyClient";
 import {Event } from './types';
+import {Post} from "../Posts/types";
 
 export const fetchEvents = (id: string, handler: () => void): AppThunk<Promise<void>> => async (
     dispatch,
@@ -10,9 +11,9 @@ export const fetchEvents = (id: string, handler: () => void): AppThunk<Promise<v
     dispatch(setEventPending(true));
     try {
         const response = await kyClient.get(`trainer/${id}/events`);
-        const data: Event[] = await response.json();
+        const data: {data: Event[]} = await response.json();
         if (data) {
-            dispatch(setEvents(data));
+            dispatch(setEvents(data.data));
         }
     } catch (e) {
         handler();

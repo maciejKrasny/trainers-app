@@ -35,9 +35,10 @@ interface PostCardProps {
     comments?: Comment[];
     authorName?: string;
     authorSurname?: string;
+    commentsCount: number;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ authorName, authorSurname, content, title, comments, id}) => {
+const PostCard: React.FC<PostCardProps> = ({ commentsCount, authorName, authorSurname, content, title, comments, id}) => {
     const history = useHistory();
     const { authorization } = useSelector(state => state.authorizationUsers);
     const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
@@ -53,6 +54,13 @@ const PostCard: React.FC<PostCardProps> = ({ authorName, authorSurname, content,
             dispatch(postThunks.addCommentToPost({postId: id, content: commentValue}));
             setCommentValue('');
         }
+    }
+
+    const handleToggleComments = (comments: Comment[], commentsCount: number) => {
+        if (comments?.length !== commentsCount && !isCommentsOpen) {
+            dispatch(postThunks.fetchPostComments(id));
+        }
+        setIsCommentsOpen(!isCommentsOpen);
     }
 
     return (
@@ -82,8 +90,8 @@ const PostCard: React.FC<PostCardProps> = ({ authorName, authorSurname, content,
                 </ContentContainer>
             </CardContent>
             {authorization?.user._id && <StyledCardActions>
-                {comments?.length && <Button color="primary" onClick={() => setIsCommentsOpen(!isCommentsOpen)}>{isCommentsOpen ? "Ukryj komentarze" : "Pokaż komentarze"}</Button>}
-                <span style={{marginLeft: 'auto'}}>{`${comments?.length || 0} ${commentEnd(comments?.length || 0)}`}</span>
+                {commentsCount && <Button color="primary" onClick={() => handleToggleComments(comments || [], commentsCount)}>{isCommentsOpen ? "Ukryj komentarze" : "Pokaż komentarze"}</Button>}
+                <span style={{marginLeft: 'auto'}}>{`${commentsCount} ${commentEnd(commentsCount)}`}</span>
             </StyledCardActions>}
             {authorization?.user._id && <CommnetsContainer>
                 <AddCommentContainer>
@@ -91,12 +99,12 @@ const PostCard: React.FC<PostCardProps> = ({ authorName, authorSurname, content,
                     <StyledTextField onChange={(event) => setCommentValue(event.target.value)} value={commentValue} placeholder="Napisz komentarz"/>
                     <Button onClick={() => handleOnAdd()} variant="contained" color="primary">Dodaj</Button>
                 </AddCommentContainer>
-                {isCommentsOpen && comments?.map(comment => {
+                {isCommentsOpen && comments?.length && comments.map(comment => {
                     return <CommentComponent
                         key={comment._id}
                         comment={comment.content}
-                        name={comment.author.userDetails.firstName}
-                        surname={comment.author.userDetails.lastName}
+                        name={comment.user.userDetails.firstName}
+                        surname={comment.user.userDetails.lastName}
                     />
                 })}
             </CommnetsContainer>

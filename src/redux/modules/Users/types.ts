@@ -8,10 +8,6 @@ export interface UserDetails {
     lastName: string;
 }
 
-export interface MostPopularUser {
-    _id: string;
-}
-
 export interface User {
     _id: string;
     type: UserType;
@@ -26,7 +22,7 @@ export interface User {
 
 export interface UserState {
     users: User[];
-    mostPopularUsers: MostPopularUser[];
+    mostPopularUsers: User[];
     pending: boolean;
 }
 
@@ -52,7 +48,7 @@ export interface ToObservedAction {
 
 export interface SetMostPopularUsersAction {
     type: typeof SET_MOST_POPULAR_USERS;
-    payload: MostPopularUser[];
+    payload: User[];
 }
 
 

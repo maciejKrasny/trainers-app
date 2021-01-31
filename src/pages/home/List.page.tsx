@@ -22,7 +22,7 @@ const filterBySpecializations = (trainers: User[], specializations: string[]) =>
 }
 
 const filterByRating = (users: User[], rating: number) => {
-    return users.filter(user => (user.reviewsSummary.averageGrade || 0) >= rating);
+    return users.filter(user => Math.round(user.reviewsSummary.averageGrade) >= rating);
 }
 
 const filterTrainers = (users: User[], city: string, specializations: string[], rating: number) => {

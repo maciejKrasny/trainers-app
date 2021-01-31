@@ -1,6 +1,6 @@
 import React from 'react';
 import {BodyContainer, SelectContainer} from "./Modal.styled";
-import {Button, TextField} from "@material-ui/core";
+import {Button, TextField, Typography} from "@material-ui/core";
 import ReportCategorySelect from "../Selects/ReportCategorySelect";
 
 interface ModalReportBodyProps {
@@ -10,6 +10,7 @@ interface ModalReportBodyProps {
 const ModalReportBody: React.FC<ModalReportBodyProps> = () => {
     return (
         <BodyContainer>
+            <Typography style={{marginBottom: '1rem'}} variant="h4">Zgłoszenie</Typography>
             <ReportCategorySelect transparent={false} />
             <SelectContainer>
                 <TextField id="description" style={{ width: '100%' }} value={''} onChange={() => {}} multiline variant="outlined" label="Opis" />

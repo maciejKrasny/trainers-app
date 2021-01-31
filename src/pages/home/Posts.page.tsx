@@ -13,7 +13,7 @@ interface PostsPageProps
 }
 
 const PostsPage: React.FC <PostsPageProps> = () => {
-    const { observePosts, pending } = useSelector(state => state.posts);
+    const { posts: observePosts, pending } = useSelector(state => state.posts);
     const dispatch = useDispatch();
     const handler = useHttpErrorHandler();
 
@@ -40,6 +40,7 @@ const PostsPage: React.FC <PostsPageProps> = () => {
                                     comments={post.comments}
                                     authorName={post.author.userDetails.firstName}
                                     authorSurname={post.author.userDetails.lastName}
+                                    commentsCount={post.commentsCount}
                                 />
                             </div>
                             ))

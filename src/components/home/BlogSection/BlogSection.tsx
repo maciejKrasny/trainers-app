@@ -20,6 +20,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ userId }) => {
                         content={post.content}
                         image={"a"}
                         comments={post.comments}
+                        commentsCount={post.commentsCount}
                     />
                 ))
                 : <div style={{display: 'flex', justifyContent: "center", marginTop: '2rem'}}>Brak postów</div>   

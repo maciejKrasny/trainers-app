@@ -6,6 +6,7 @@ import Layout from '../../components/home/Layout/Layout'
 import MostPopularTrainersSection from '../../components/home/MostPopularTrainersSection/MostPopularTrainersSection';
 import RegisterSection from "../../components/home/RegisterSection/RegisterSection";
 import * as formDataThunks from "../../redux/modules/FormData/thunks";
+import * as userThunks from "../../redux/modules/Users/thunks";
 
 const LandingPage: React.FC = () => {
     const [city, setCity] = useState<string>('');
@@ -14,6 +15,8 @@ const LandingPage: React.FC = () => {
     useEffect(() => {
         dispatch(formDataThunks.fetchCities());
         dispatch(formDataThunks.fetchSpecializations());
+        dispatch(formDataThunks.fetchSpecializations());
+        dispatch(userThunks.fetchMostPopularUsers());
     }, []);
 
     return (

@@ -1,4 +1,4 @@
-import {ADD_COMMENT, Comment, Post, PostActions, SET_OBSERVE_POSTS, SET_POST_PENDING, SET_POSTS} from "./types";
+import {SET_POST_COMMENTS, Comment, Post, PostActions, SET_OBSERVE_POSTS, SET_POST_PENDING, SET_POSTS} from "./types";
 
 export function setPosts(data: Post[]): PostActions {
     return {
@@ -13,9 +13,9 @@ export function setPending(data: boolean): PostActions {
         payload: data
     };
 }
-export function addComment(data: Comment): PostActions {
+export function setPostComments(data: {postId: string; comments: Comment[]}): PostActions {
     return {
-        type: ADD_COMMENT,
+        type: SET_POST_COMMENTS,
         payload: data
     };
 }

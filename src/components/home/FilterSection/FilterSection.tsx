@@ -31,7 +31,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ city, specializations, on
         } else if (specializations.length) {
             history.push({
                 pathname: 'trenerzy',
-                search: `${specsString}`
+                search: `aktywnosci=${specsString}`
             })
         } else {
             history.push('trenerzy')

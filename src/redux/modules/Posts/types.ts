@@ -2,7 +2,7 @@ import {User} from "../Users/types";
 
 export interface Comment {
     _id: string;
-    author: User;
+    user: User;
     content: string;
     postId: string;
 }
@@ -13,6 +13,7 @@ export interface Post {
     author: User;
     content: string;
     comments?: Comment[];
+    commentsCount: number;
 }
 
 export interface PostsState {
@@ -23,7 +24,7 @@ export interface PostsState {
 
 export const SET_POSTS = 'SET_POSTS';
 export const SET_OBSERVE_POSTS = 'SET_OBSERVE_POSTS';
-export const ADD_COMMENT = 'ADD_COMMENT';
+export const SET_POST_COMMENTS = 'SET_POST_COMMENTS';
 export const SET_POST_PENDING = 'SET_POST_PENDING';
 
 export interface SetPostsAction {
@@ -36,9 +37,12 @@ export interface SetPostPending {
     payload: boolean;
 }
 
-export interface AddCommentAction {
-    type: typeof ADD_COMMENT;
-    payload: Comment;
+export interface SetPostCommentsAction {
+    type: typeof SET_POST_COMMENTS;
+    payload: {
+        postId: string;
+        comments: Comment[];
+    };
 }
 
 export interface SetObservePostsAction {
@@ -46,4 +50,4 @@ export interface SetObservePostsAction {
     payload: Post[];
 }
 
-export type PostActions = SetPostsAction | SetPostPending | AddCommentAction | SetObservePostsAction;
+export type PostActions = SetPostsAction | SetPostPending | SetPostCommentsAction | SetObservePostsAction;

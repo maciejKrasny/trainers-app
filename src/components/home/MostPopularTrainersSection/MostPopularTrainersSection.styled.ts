@@ -41,3 +41,13 @@ export const AllTrainersLink = styled(Link)`
     }
     transition: ${({theme}) => theme.transition};
 `;
+
+export const TrainerCardContainer = styled.div`
+  margin-top: 1rem;      
+  :nth-child(even) {
+    padding-left: 0.5rem; 
+  }
+  :nth-child(odd) {
+    padding-right: 0.5rem;
+  }
+`;
