@@ -12,6 +12,8 @@ interface ModalProps {
     isOpen: boolean;
     service?: Service;
     onClose: () => void;
+    reportType?: 'POST' | 'EVENT' | 'COMMENT' | 'REVIEW';
+    reportId?: string;
 }
 
 const useStyles = makeStyles(() =>
@@ -24,7 +26,7 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const Modal: React.FC<ModalProps> = ({ isOpen, type, onClose, service }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, type, onClose, service, reportId, reportType }) => {
     const classes = useStyles();
     const body = React.useMemo(() => {
         if (type === 'signIn') {
@@ -34,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, type, onClose, service }) => {
             return <ModalSignUpBody onClose={onClose} />
         }
         if (type === 'report') {
-            return <ModalReportBody onClose={onClose} />
+            return <ModalReportBody type={reportType} id={reportId} onClose={onClose} />
         }
         return <div></div>;
     }, [type, service]);

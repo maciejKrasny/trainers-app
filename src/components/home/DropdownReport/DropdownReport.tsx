@@ -9,9 +9,11 @@ import {MoreVert} from "@material-ui/icons";
 import { StyledIconButton } from "./DropdownReport.styled";
 
 interface DropdownReportProps {
+    reportType: 'POST' | 'EVENT' | 'COMMENT' | 'REVIEW';
+    reportId: string;
 }
 
-const DropdownReport: React.FC<DropdownReportProps> = ({  }) => {
+const DropdownReport: React.FC<DropdownReportProps> = ({ reportId, reportType }) => {
     const { authorization } = useSelector(state => state.authorizationUsers);
     const dropdownWrapper = React.useRef<HTMLDivElement>(null);
 
@@ -42,7 +44,7 @@ const DropdownReport: React.FC<DropdownReportProps> = ({  }) => {
                                 <Typography>Zgłoś</Typography>
                             </DropdownAction>
                         </DropdownContainer>
-                        <Modal isOpen={Boolean(currentModal)} type={currentModal} onClose={() => setCurrentModal('')} />
+                        <Modal reportId={reportId} reportType={reportType} isOpen={Boolean(currentModal)} type={currentModal} onClose={() => setCurrentModal('')} />
                 </>
             }
         </Wrapper>

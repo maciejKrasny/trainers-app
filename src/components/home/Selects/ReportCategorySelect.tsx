@@ -4,7 +4,7 @@ import React from "react"
 import {hexToRGB} from "../../../utils/styles/utils";
 import {makeStyles} from "@material-ui/core/styles";
 
-const categories = ['Pornografia', 'Wyzwiska', 'Przemoc']
+const categories = ['Nagość', 'Przemoc', 'Prześladowanie', 'Okaleczenie', 'Fałszywe informacje', 'Spam', 'Nieautoryzowana sprzedaż', 'Propagowanie nienawiści', 'Terroryzm', 'Inne']
 
 interface CitySelectProps {
     onChange?: (newValue: string) => void;

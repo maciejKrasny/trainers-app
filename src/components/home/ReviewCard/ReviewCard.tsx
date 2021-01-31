@@ -13,6 +13,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import DropdownReport from "../DropdownReport/DropdownReport";
 
 interface ReviewCardProps {
+    id: string;
     name: string;
     surname: string;
     rating: number;
@@ -20,10 +21,11 @@ interface ReviewCardProps {
     location: string;
 }
 
-const ReviewCard: React.FC<ReviewCardProps> = ({name, content,rating, surname, location}) => {
+const ReviewCard: React.FC<ReviewCardProps> = ({id, name, content,rating, surname, location}) => {
     const classes = useStyles();
     const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
     const shorterContent = content.length > 300 ? content.substr(0, 300) : content;
+    console.log(id, 'a')
     return (
         <Card style={{marginTop: '1rem'}}>
             <DetailsContainer >
@@ -33,7 +35,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({name, content,rating, surname, l
                     <Location>{location}</Location>
                 </InfoContainer>
                 <div style={{marginLeft: "auto"}}>
-                    <DropdownReport/>
+                    <DropdownReport reportId={id} reportType="REVIEW"/>
                 </div>
             </DetailsContainer>
             <CardContent>

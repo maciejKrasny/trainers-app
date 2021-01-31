@@ -4,12 +4,13 @@ import {Avatar} from "@material-ui/core";
 import DropdownReport from "../DropdownReport/DropdownReport";
 
 interface CommentProps {
+    id: string;
     name: string;
     surname: string;
     comment: string;
 }
 
-const Comment: React.FC<CommentProps> = ({name, surname, comment}) => {
+const Comment: React.FC<CommentProps> = ({id, name, surname, comment}) => {
     const classes = useStyles();
 
     return (
@@ -20,7 +21,7 @@ const Comment: React.FC<CommentProps> = ({name, surname, comment}) => {
                 <CommentContent>{comment}</CommentContent>
             </div>
             <DropdownContainer>
-                <DropdownReport/>
+                <DropdownReport reportType="COMMENT" reportId={id}/>
             </DropdownContainer>
         </CommentContainer>
     );

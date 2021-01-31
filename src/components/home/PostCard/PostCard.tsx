@@ -38,7 +38,7 @@ interface PostCardProps {
     commentsCount: number;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ commentsCount, authorName, authorSurname, content, title, comments, id}) => {
+const PostCard: React.FC<PostCardProps> = ({ image, commentsCount, authorName, authorSurname, content, title, comments, id}) => {
     const history = useHistory();
     const { authorization } = useSelector(state => state.authorizationUsers);
     const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
@@ -76,13 +76,13 @@ const PostCard: React.FC<PostCardProps> = ({ commentsCount, authorName, authorSu
             )}
             <CardMedia
                 style={{height: 400}}
-                image={photo}
+                image={image}
                 title="Contemplative Reptile"
             />
             <CardContent>
                 <StyledTitle gutterBottom variant="h5">
                     {title}
-                    <DropdownReport />
+                    <DropdownReport reportType="POST" reportId={id}/>
                 </StyledTitle>
                 <ContentContainer variant="body2" color="textSecondary">
                     {isReadMoreOpen ? content : `${shorterContent}`}
@@ -90,7 +90,7 @@ const PostCard: React.FC<PostCardProps> = ({ commentsCount, authorName, authorSu
                 </ContentContainer>
             </CardContent>
             {authorization?.user._id && <StyledCardActions>
-                {commentsCount && <Button color="primary" onClick={() => handleToggleComments(comments || [], commentsCount)}>{isCommentsOpen ? "Ukryj komentarze" : "Pokaż komentarze"}</Button>}
+                {!!commentsCount && <Button color="primary" onClick={() => handleToggleComments(comments || [], commentsCount)}>{isCommentsOpen ? "Ukryj komentarze" : "Pokaż komentarze"}</Button>}
                 <span style={{marginLeft: 'auto'}}>{`${commentsCount} ${commentEnd(commentsCount)}`}</span>
             </StyledCardActions>}
             {authorization?.user._id && <CommnetsContainer>
@@ -101,6 +101,7 @@ const PostCard: React.FC<PostCardProps> = ({ commentsCount, authorName, authorSu
                 </AddCommentContainer>
                 {isCommentsOpen && comments?.length && comments.map(comment => {
                     return <CommentComponent
+                        id={comment._id}
                         key={comment._id}
                         comment={comment.content}
                         name={comment.user.userDetails.firstName}

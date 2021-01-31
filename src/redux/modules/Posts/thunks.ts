@@ -16,7 +16,7 @@ export const fetchPosts = (id: string, handler: () => void): AppThunk<Promise<vo
             dispatch(setPosts(data));
         }
     } catch(e){
-        handler();
+        // handler();
     }
 
     dispatch(setPending(false));
