@@ -1,13 +1,23 @@
 import {Reducer} from 'redux';
 import initialState from './state';
-import {PostActions, PostsState, SET_OBSERVE_POSTS, SET_POST_COMMENTS, SET_POST_PENDING, SET_POSTS} from './types';
+import {
+    PostActions,
+    PostsState,
+    RESET,
+    SET_OBSERVE_POSTS,
+    SET_POST_COMMENTS,
+    SET_POST_PENDING,
+    SET_POSTS
+} from './types';
 
 const postReducer: Reducer<PostsState, PostActions> = (state = initialState, action) => {
     switch (action.type) {
         case SET_POSTS:
             return {
                 ...state,
-                posts: action.payload,
+                postsCurrentPage: action.payload.currentPage,
+                postsTotalPages: action.payload.totalPages,
+                posts: [...state.posts, ...action.payload.data],
             };
         case SET_OBSERVE_POSTS:
             return {
@@ -35,6 +45,17 @@ const postReducer: Reducer<PostsState, PostActions> = (state = initialState, act
                 ...state,
                 pending: action.payload,
             };
+
+        case RESET:
+            return {
+                pending: false,
+                posts: [],
+                postsCurrentPage: 0,
+                postsTotalPages: 0,
+                observePosts: [],
+                observePostsCurrentPage: 0,
+                observePostsTotalPages: 0,
+            }
         default:
             return state;
     }

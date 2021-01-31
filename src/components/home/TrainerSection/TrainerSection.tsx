@@ -28,6 +28,7 @@ import * as postThunks from "../../../redux/modules/Posts/thunks";
 import {User} from "../../../redux/modules/Users/types";
 import * as userThunks from '../../../redux/modules/Users/thunks';
 import { useHttpErrorHandler } from '../../../utils/hooks/useHttpErrorHandler';
+import {resetPosts} from "../../../redux/modules/Posts/actions";
 
 
 interface TrainerSectionProps {
@@ -37,9 +38,6 @@ interface TrainerSectionProps {
 const TrainerSection: React.FC<TrainerSectionProps> = () => {
     const classes = useStyles();
     const { users, pending: trainersPending } = useSelector(state => state.users);
-    const { pending: eventsPending } = useSelector(state => state.events);
-    const { pending: postsPending } = useSelector(state => state.posts);
-    const { pending: servicesPending } = useSelector(state => state.services);
     const { authorization } = useSelector(state => state.authorizationUsers);
     const [currentTrainer, setCurrentTrainer] = useState<User>();
     const { url } = useRouteMatch();
@@ -48,15 +46,15 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const handler = useHttpErrorHandler()
+
     useEffect(() => {
         if (id) {
             const trainer = users.filter(trainer => trainer.type === 'TRAINER').find(trainer => trainer._id === id);
             setCurrentTrainer(trainer);
-            dispatch(postThunks.fetchPosts(id, handler));
         }
-    }, [id, users]);
+    }, [users]);
 
-    if (trainersPending || postsPending) {
+    if (trainersPending) {
         return (
             <Container>
                 <BackgroundImage />

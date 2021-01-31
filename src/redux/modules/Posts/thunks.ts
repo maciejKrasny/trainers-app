@@ -4,14 +4,14 @@ import {Comment, Post} from './types';
 import kyClient from "../../../api/kyClient";
 import {WithPagination} from "../../types";
 
-export const fetchPosts = (id: string, handler: () => void): AppThunk<Promise<void>> => async (
+export const fetchPosts = (currentPage: number, id: string, handler: () => void): AppThunk<Promise<void>> => async (
     dispatch,
     getState
 ) => {
     dispatch(setPending(true));
     try {
-        const response = await kyClient.get(`trainer/${id}/posts`);
-        const data: Post[] = await response.json();
+        const response = await kyClient.get(`trainer/${id}/posts?currentPage=${currentPage || 1}`);
+        const data: WithPagination<Post[]> = await response.json();
         if (data) {
             dispatch(setPosts(data));
         }

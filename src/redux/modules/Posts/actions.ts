@@ -1,7 +1,16 @@
-import {SET_POST_COMMENTS, Comment, Post, PostActions, SET_OBSERVE_POSTS, SET_POST_PENDING, SET_POSTS} from "./types";
+import {
+    Comment,
+    Post,
+    PostActions,
+    RESET,
+    SET_OBSERVE_POSTS,
+    SET_POST_COMMENTS,
+    SET_POST_PENDING,
+    SET_POSTS
+} from "./types";
 import {WithPagination} from "../../types";
 
-export function setPosts(data: Post[]): PostActions {
+export function setPosts(data: WithPagination<Post[]>): PostActions {
     return {
         type: SET_POSTS,
         payload: data
@@ -25,5 +34,11 @@ export function setObservePosts(data: WithPagination<Post[]>): PostActions {
     return {
         type: SET_OBSERVE_POSTS,
         payload: data
+    }
+};
+
+export function resetPosts(): PostActions {
+    return {
+        type: RESET,
     };
 }

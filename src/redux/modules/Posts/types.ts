@@ -19,6 +19,8 @@ export interface Post {
 
 export interface PostsState {
     posts: Post[];
+    postsCurrentPage: number;
+    postsTotalPages: number;
     observePosts: Post[];
     observePostsCurrentPage: number;
     observePostsTotalPages: number;
@@ -29,10 +31,11 @@ export const SET_POSTS = 'SET_POSTS';
 export const SET_OBSERVE_POSTS = 'SET_OBSERVE_POSTS';
 export const SET_POST_COMMENTS = 'SET_POST_COMMENTS';
 export const SET_POST_PENDING = 'SET_POST_PENDING';
+export const RESET = 'RESET_POSTS';
 
 export interface SetPostsAction {
     type: typeof SET_POSTS;
-    payload: Post[];
+    payload:  WithPagination<Post[]>;
 }
 
 export interface SetPostPending {
@@ -53,4 +56,8 @@ export interface SetObservePostsAction {
     payload: WithPagination<Post[]>;
 }
 
-export type PostActions = SetPostsAction | SetPostPending | SetPostCommentsAction | SetObservePostsAction;
+export interface ResetPostsAction {
+    type: typeof RESET;
+}
+
+export type PostActions = SetPostsAction | SetPostPending | SetPostCommentsAction | SetObservePostsAction | ResetPostsAction;

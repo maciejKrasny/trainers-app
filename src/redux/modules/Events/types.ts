@@ -1,4 +1,5 @@
 import {User} from "../Users/types";
+import {WithPagination} from "../../types";
 
 export interface Event {
     _id: string;
@@ -14,14 +15,17 @@ export interface Event {
 export interface EventsState {
     events: Event[];
     pending: boolean;
+    currentPage: number;
+    totalPages: number;
 }
 
 export const SET_EVENTS = 'SET_EVENTS';
 export const SET_EVENT_PENDING = 'SET_EVENT_PENDING';
+export const RESET = 'RESET_EVENTS';
 
 export interface SetEventsAction {
     type: typeof SET_EVENTS;
-    payload: Event[];
+    payload: WithPagination<Event[]>;
 }
 
 export interface SetEventPendingAction {
@@ -29,4 +33,8 @@ export interface SetEventPendingAction {
     payload: boolean;
 }
 
-export type EventActions = SetEventsAction | SetEventPendingAction;
+export interface ResetEventAction {
+    type: typeof RESET;
+}
+
+export type EventActions = SetEventsAction | SetEventPendingAction | ResetEventAction;

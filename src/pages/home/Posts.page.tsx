@@ -7,6 +7,7 @@ import {AllTrainersLink} from "../../components/home/MostPopularTrainersSection/
 import * as postThunks from "../../redux/modules/Posts/thunks";
 import {useHttpErrorHandler} from "../../utils/hooks/useHttpErrorHandler";
 import {Button, CircularProgress} from "@material-ui/core";
+import { resetPosts } from '../../redux/modules/Posts/actions';
 interface PostsPageProps
 {
 
@@ -25,7 +26,7 @@ const PostsPage: React.FC <PostsPageProps> = () => {
         handlePostsFetch();
 
         return () => {
-        //    Tu wstaw reset paginacji
+            dispatch(resetPosts());
         }
     }, []);
 
