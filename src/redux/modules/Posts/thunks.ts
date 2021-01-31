@@ -2,6 +2,7 @@ import { AppThunk } from '../../store/store.types';
 import {setPending, setPosts, setObservePosts, setPostComments} from './actions';
 import {Comment, Post} from './types';
 import kyClient from "../../../api/kyClient";
+import {WithPagination} from "../../types";
 
 export const fetchPosts = (id: string, handler: () => void): AppThunk<Promise<void>> => async (
     dispatch,
@@ -10,9 +11,9 @@ export const fetchPosts = (id: string, handler: () => void): AppThunk<Promise<vo
     dispatch(setPending(true));
     try {
         const response = await kyClient.get(`trainer/${id}/posts`);
-        const data: {data: Post[]} = await response.json();
+        const data: Post[] = await response.json();
         if (data) {
-            dispatch(setPosts(data.data));
+            dispatch(setPosts(data));
         }
     } catch(e){
         handler();
@@ -27,9 +28,9 @@ export const addCommentToPost = (data: {postId: string; content: string}): AppTh
 ) => {
     try {
         const response = await kyClient.post(`post/${data.postId}/comments`, {json: {content: data.content}});
-        const comment: {comments: Comment[]} = await response.json();
+        const comment: Comment = await response.json();
         if (comment) {
-            dispatch(setPostComments({postId: data.postId, comments: comment.comments}));
+            // dispatch(addComment(comment));
         }
     } catch (e) {
     }
@@ -49,19 +50,19 @@ export const fetchPostComments = (postId: string): AppThunk<Promise<void>> => as
     }
 };
 
-export const fetchObservePosts = (handler: () => void): AppThunk<Promise<void>> => async (
+export const fetchObservePosts = (currentPage: number, handler: () => void): AppThunk<Promise<void>> => async (
     dispatch,
     getState
 ) => {
     dispatch(setPending(true));
     try {
-        const response = await kyClient.get(`user/posts`);
-        const data: {data: Post[]} = await response.json();
+        const response = await kyClient.get(`user/posts?currentPage=${currentPage || 1}`);
+        const data: WithPagination<Post[]> = await response.json();
         if (data) {
-            dispatch(setObservePosts(data.data));
+            dispatch(setObservePosts(data));
         }
     } catch(e){
-        handler();
+        // handler();
     }
 
     dispatch(setPending(false));

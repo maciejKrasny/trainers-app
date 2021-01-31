@@ -1,3 +1,4 @@
+import { WithPagination } from "../../types";
 import {User} from "../Users/types";
 
 export interface Comment {
@@ -19,6 +20,8 @@ export interface Post {
 export interface PostsState {
     posts: Post[];
     observePosts: Post[];
+    observePostsCurrentPage: number;
+    observePostsTotalPages: number;
     pending: boolean;
 }
 
@@ -47,7 +50,7 @@ export interface SetPostCommentsAction {
 
 export interface SetObservePostsAction {
     type: typeof SET_OBSERVE_POSTS;
-    payload: Post[];
+    payload: WithPagination<Post[]>;
 }
 
 export type PostActions = SetPostsAction | SetPostPending | SetPostCommentsAction | SetObservePostsAction;

@@ -12,7 +12,9 @@ const postReducer: Reducer<PostsState, PostActions> = (state = initialState, act
         case SET_OBSERVE_POSTS:
             return {
                 ...state,
-                observePosts: action.payload,
+                observePostsCurrentPage: action.payload.currentPage,
+                observePostsTotalPages: action.payload.totalPages,
+                observePosts: [...state.observePosts, ...action.payload.data],
             };
         case SET_POST_COMMENTS: {
             const currentPostIndex = state.posts.findIndex(post => post._id === action.payload.postId);
