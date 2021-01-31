@@ -7,7 +7,7 @@ const eventReducer: Reducer<EventsState, EventActions> = (state = initialState, 
         case SET_EVENTS:
             return {
                 ...state,
-                events: action.payload.data,
+                events: [...state.events, ...action.payload.data],
                 currentPage: action.payload.currentPage,
                 totalPages: action.payload.totalPages,
             };

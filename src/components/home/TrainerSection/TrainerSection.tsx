@@ -54,6 +54,8 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
         if (id) {
             const trainer = users.filter(trainer => trainer.type === 'TRAINER').find(trainer => trainer._id === id);
             setCurrentTrainer(trainer);
+        }
+        if (authorization?.token) {
             dispatch(userThunks.fetchObservedUsers());
         }
     }, [users]);
