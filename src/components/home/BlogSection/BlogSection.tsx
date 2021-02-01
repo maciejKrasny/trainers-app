@@ -1,7 +1,6 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {User} from '../../../redux/modules/Users/types';
 import PostCard from "../PostCard/PostCard";
 import {useHttpErrorHandler} from "../../../utils/hooks/useHttpErrorHandler";
 import * as postThunks from "../../../redux/modules/Posts/thunks";
@@ -40,9 +39,10 @@ const BlogSection: React.FC<BlogSectionProps> = ({ userId }) => {
                                 id={post._id}
                                 title={post.title}
                                 content={post.content}
-                                image={'post.image'}
+                                image={post.image}
                                 comments={post.comments}
                                 commentsCount={post.commentsCount}
+                                authorId={post.author._id}
                             />
                         ))}
                         {!pending && postsTotalPages >= postsCurrentPage && (

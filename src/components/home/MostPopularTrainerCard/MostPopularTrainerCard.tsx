@@ -3,6 +3,7 @@ import {TrainerCard, DetailsContainer, InfoContainer, useStyles, Name, Location,
 import {Avatar, Button} from "@material-ui/core";
 import {Rating} from "@material-ui/lab";
 import {useHistory} from "react-router-dom";
+import {api_url} from "../../../api/setup";
 
 interface MostPopularTrainerCardProps {
     id: string;
@@ -12,16 +13,17 @@ interface MostPopularTrainerCardProps {
     reviewCreator: string;
     reviewContent: string;
     reviewRating: number;
+    avatar?: string;
 }
 
-const MostPopularTrainersCard: React.FC<MostPopularTrainerCardProps> = ({ id, name, location, initials, reviewCreator, reviewRating, reviewContent}) => {
+const MostPopularTrainersCard: React.FC<MostPopularTrainerCardProps> = ({ avatar, id, name, location, initials, reviewCreator, reviewRating, reviewContent}) => {
     const classes = useStyles();
     const history = useHistory();
 
     return (
         <TrainerCard>
             <DetailsContainer>
-                <Avatar className={classes.avatar}>{initials}</Avatar>
+                <Avatar className={classes.avatar}>{avatar ? `${api_url}avatars/${avatar}` : initials}</Avatar>
                 <InfoContainer>
                     <Name>{name}</Name>
                     <Location>{location}</Location>

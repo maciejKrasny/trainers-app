@@ -12,6 +12,7 @@ import {User} from "../../../redux/modules/Users/types";
 import {KeyboardArrowLeft} from "@material-ui/icons";
 import { Link } from 'react-router-dom';
 import {setError} from "../../../redux/modules/Authorization/actions";
+import {api_url} from "../../../api/setup";
 
 interface HeaderProps {
     isSticky?: boolean;
@@ -48,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ isSticky = true }) => {
                             <Action onClick={() => setCurrentModal('signUp')}>Zarejestruj się</Action>
                         </ActionContainer>
                     ) : (
-                        <Dropdown activator={<Avatar className={classes.avatar}>{`${authorization.user.userDetails.firstName[0]}${authorization.user.userDetails.lastName[0]}`}</Avatar>} />
+                        <Dropdown activator={<Avatar className={classes.avatar}>{authorization.user.userDetails.avatar ? `${api_url}avatars/${authorization.user.userDetails.avatar}` : `${authorization.user.userDetails.firstName[0]}${authorization.user.userDetails.lastName[0]}`}</Avatar>} />
                     )}
                 </div>
             </HeaderContainer>

@@ -26,19 +26,22 @@ import {commentEnd} from "./PostCard.utils";
 import DropdownReport from "../DropdownReport/DropdownReport";
 import * as postThunks from '../../../redux/modules/Posts/thunks';
 import {useHistory} from "react-router-dom";
+import {api_url} from "../../../api/setup";
 
 interface PostCardProps {
     title: string;
     content: string;
-    image: string;
+    image?: string;
     id: string;
     comments?: Comment[];
     authorName?: string;
     authorSurname?: string;
     commentsCount: number;
+    avatar?: string;
+    authorId: string;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ image, commentsCount, authorName, authorSurname, content, title, comments, id}) => {
+const PostCard: React.FC<PostCardProps> = ({ authorId, avatar, image, commentsCount, authorName, authorSurname, content, title, comments, id}) => {
     const history = useHistory();
     const { authorization } = useSelector(state => state.authorizationUsers);
     const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
@@ -67,17 +70,16 @@ const PostCard: React.FC<PostCardProps> = ({ image, commentsCount, authorName, a
         <StyledCard style={{marginBottom: '1rem'}}>
             {authorName && authorSurname && (
                 <DetailsContainer>
-                    <Avatar className={classes.avatar}>{`${authorName[0]}${authorSurname[0]}`}</Avatar>
+                    <Avatar className={classes.avatar}>{avatar ? `${api_url}avatars/${avatar}` : `${authorName[0]}${authorSurname[0]}`}</Avatar>
                     <InfoContainer>
                         <Name>{`${authorName} ${authorSurname}`}</Name>
                     </InfoContainer>
-                    <VisitButton onClick={() => history.push(`/${id}`)} variant={"contained"} color='primary'>Odwiedź</VisitButton>
+                    <VisitButton onClick={() => history.push(`/${authorId}`)} variant={"contained"} color='primary'>Odwiedź</VisitButton>
                 </DetailsContainer>
             )}
             <CardMedia
                 style={{height: 400}}
-                image={image}
-                title="Contemplative Reptile"
+                image={`${api_url}feature-images/${image}`}
             />
             <CardContent>
                 <StyledTitle gutterBottom variant="h5">
@@ -95,7 +97,7 @@ const PostCard: React.FC<PostCardProps> = ({ image, commentsCount, authorName, a
             </StyledCardActions>}
             {authorization?.user._id && <CommnetsContainer>
                 <AddCommentContainer>
-                    <Avatar className={classes.avatar}>{`${authorization.user.userDetails.firstName[0]}${authorization.user.userDetails.lastName[0]}`}</Avatar>
+                    <Avatar className={classes.avatar}>{authorization.user.userDetails.avatar ? `${api_url}avatars/${authorization.user.userDetails.avatar}` : `${authorization.user.userDetails.firstName[0]}${authorization.user.userDetails.lastName[0]}`}</Avatar>
                     <StyledTextField onChange={(event) => setCommentValue(event.target.value)} value={commentValue} placeholder="Napisz komentarz"/>
                     <Button onClick={() => handleOnAdd()} variant="contained" color="primary">Dodaj</Button>
                 </AddCommentContainer>
@@ -106,6 +108,7 @@ const PostCard: React.FC<PostCardProps> = ({ image, commentsCount, authorName, a
                         comment={comment.content}
                         name={comment.user.userDetails.firstName}
                         surname={comment.user.userDetails.lastName}
+                        avatar={comment.user.userDetails.avatar}
                     />
                 })}
             </CommnetsContainer>

@@ -42,12 +42,13 @@ const PostsPage: React.FC <PostsPageProps> = () => {
                             <PostCard
                                 title={post.title}
                                 content={post.content}
-                                image={'a'}
+                                image={post.image}
                                 id={post._id}
                                 comments={post.comments}
                                 commentsCount={post.commentsCount}
                                 authorName={post.author.userDetails.firstName}
                                 authorSurname={post.author.userDetails.lastName}
+                                authorId={post.author._id}
                             />
                         </div>
                     ))}

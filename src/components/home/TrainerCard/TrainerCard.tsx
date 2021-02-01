@@ -14,6 +14,7 @@ import {
 } from './TrainerCard.styled';
 import { useHistory } from "react-router-dom";
 import {Rating} from "@material-ui/lab";
+import {api_url} from "../../../api/setup";
 
 interface TrainerCardProps {
     id: string;
@@ -23,16 +24,17 @@ interface TrainerCardProps {
     specializations: string[];
     initials: string;
     rating: number;
+    avatar?: string;
 }
 
-const TrainerCard: React.FC<TrainerCardProps> = ({ id, name, description, specializations, location, initials, rating }) => {
+const TrainerCard: React.FC<TrainerCardProps> = ({ avatar, id, name, description, specializations, location, initials, rating }) => {
     const history = useHistory();
     const classes = useStyles();
     return (
         <StyledCard>
             <StyledCardContent>
                 <DetailsContainer>
-                    <Avatar className={classes.avatar} >{initials}</Avatar>
+                    <Avatar className={classes.avatar} >{avatar ? `${api_url}avatars/${avatar}` : initials}</Avatar>
                     <DetailsInfoContainer>
                         <Typography variant="h5" component="h5">{name}</Typography>
                         <Location>{location}</Location>

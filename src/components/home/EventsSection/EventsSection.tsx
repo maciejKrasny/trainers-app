@@ -43,7 +43,7 @@ const EventsSection: React.FC<EventsSectionProps> = ({ userId }) => {
             <>
                 {events.filter(event => event.author._id === userId).reverse().map(event => (
                     <EventCard
-                        image={'event.image'}
+                        image={event.image}
                         title={event.title}
                         id={event._id}
                         date={event.eventDetails.dateTime}

@@ -84,6 +84,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ userId }) => {
                             rating={review.grade}
                             content={review.content}
                             location={review.user.userDetails.city || ''}
+                            avatar={review.user.userDetails.avatar}
                         />
                 })}
             </ReviewsContainer>

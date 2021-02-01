@@ -6,6 +6,7 @@ export interface UserDetails {
     phone?: number;
     firstName: string;
     lastName: string;
+    avatar?: string;
 }
 
 export interface User {

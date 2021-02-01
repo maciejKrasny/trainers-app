@@ -2,15 +2,15 @@ import {Avatar, CardActions, CardContent, CardMedia, IconButton, Typography} fro
 import Card from '@material-ui/core/Card/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import React, {useState} from 'react';
-import photo from '../FilterSection/landing_img.png';
 import {ReadMore} from "../PostCard/PostCard.styled";
 import DropdownReport from "../DropdownReport/DropdownReport";
 import dayjs from "dayjs";
+import {api_url} from "../../../api/setup";
 
 interface EventCardProps {
     title: string;
     content: string;
-    image: string;
+    image?: string;
     id: string;
     date: string;
     place: string;
@@ -32,7 +32,7 @@ const EventCard: React.FC<EventCardProps> = ({place, content, title, id, image, 
             </div>
             <CardMedia
                 style={{width: '100%', height: 300}}
-                image={image}
+                image={`${api_url}feature-images/${image}`}
                 title="Paella dish"
             />
             <CardContent>

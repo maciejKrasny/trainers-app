@@ -11,6 +11,7 @@ import { Rating } from '@material-ui/lab';
 import {ReadMore} from "../PostCard/PostCard.styled";
 import CardHeader from "@material-ui/core/CardHeader";
 import DropdownReport from "../DropdownReport/DropdownReport";
+import {api_url} from "../../../api/setup";
 
 interface ReviewCardProps {
     id: string;
@@ -19,16 +20,17 @@ interface ReviewCardProps {
     rating: number;
     content: string;
     location: string;
+    avatar?: string;
 }
 
-const ReviewCard: React.FC<ReviewCardProps> = ({id, name, content,rating, surname, location}) => {
+const ReviewCard: React.FC<ReviewCardProps> = ({ avatar, id, name, content,rating, surname, location}) => {
     const classes = useStyles();
     const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
     const shorterContent = content.length > 300 ? content.substr(0, 300) : content;
     return (
         <Card style={{marginTop: '1rem'}}>
             <DetailsContainer >
-                <Avatar className={classes.avatar}>{`${name[0]}${surname[0]}`}</Avatar>
+                <Avatar className={classes.avatar}>{avatar ? `${api_url}avatars/${avatar}` : `${name[0]}${surname[0]}`}</Avatar>
                 <InfoContainer>
                     <Name>{`${name} ${surname}`}</Name>
                     <Location>{location}</Location>

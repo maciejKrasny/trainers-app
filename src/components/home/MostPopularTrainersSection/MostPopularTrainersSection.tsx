@@ -21,6 +21,7 @@ const MostPopularTrainersSection: React.FC = () => {
                             location={trainer.userDetails.city || ''}
                             initials={`${trainer.userDetails.firstName[0]}${trainer.userDetails.lastName[0]}`}
                             rating={trainer.reviewsSummary.averageGrade || 0}
+                            avatar={trainer.userDetails.avatar}
                         />
                     </TrainerCardContainer>
                 ))}

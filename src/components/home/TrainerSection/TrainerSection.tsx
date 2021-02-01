@@ -29,6 +29,7 @@ import {User} from "../../../redux/modules/Users/types";
 import * as userThunks from '../../../redux/modules/Users/thunks';
 import { useHttpErrorHandler } from '../../../utils/hooks/useHttpErrorHandler';
 import {resetPosts} from "../../../redux/modules/Posts/actions";
+import {api_url} from "../../../api/setup";
 
 
 interface TrainerSectionProps {
@@ -84,7 +85,7 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
                         <UserInfo>
                             <InfoContainer>
                                 <DetailsContainer>
-                                    <Avatar className={classes.avatar} >{`${currentTrainer?.userDetails.firstName[0]}${currentTrainer?.userDetails.lastName[0]}`}</Avatar>
+                                    <Avatar className={classes.avatar} >{currentTrainer.userDetails.avatar ? `${api_url}avatars/${currentTrainer.userDetails.avatar}` : `${currentTrainer?.userDetails.firstName[0]}${currentTrainer?.userDetails.lastName[0]}`}</Avatar>
                                     <DetailsInfoContainer>
                                         <Typography variant="h5" component="h5">{`${currentTrainer?.userDetails.firstName} ${currentTrainer?.userDetails.lastName}`}</Typography>
                                         <InfoRow><LocationOn style={{fontSize: '16px'}}/><InfoText>{currentTrainer?.userDetails.city}</InfoText></InfoRow>

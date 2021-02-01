@@ -39,7 +39,7 @@ const Dropdown: React.FC<Props> = ({ children, activator }) => {
                     {authorization?.user.type === 'TRAINER' && (<DropdownAction onClick={() => history.push(`/${authorization?.user._id}`)}>
                         <Typography>Profil</Typography>
                     </DropdownAction>)}
-                    <DropdownAction onClick={() => history.push(`/${authorization?.user._id}`)}>
+                    <DropdownAction onClick={() => history.push(`admin`)}>
                         <Typography>Panel administratora</Typography>
                     </DropdownAction>
                     <DropdownAction onClick={() => { dispatch(authorizationThunks.clearCurrentAuthorizationUser()); setIsOpen(false); history.push('/')}}>

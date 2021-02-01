@@ -1,8 +1,9 @@
 import ky from "ky";
 import store from '../redux/store/store';
+import {api_url} from "./setup";
 
 const kyClient = ky.extend({
-    prefixUrl: 'http://localhost:3000/',
+    prefixUrl: api_url,
     hooks: {
         beforeRequest: [
             (config) => {

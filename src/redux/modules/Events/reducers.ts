@@ -12,7 +12,7 @@ const eventReducer: Reducer<EventsState, EventActions> = (state = initialState, 
                 totalPages: action.payload.totalPages,
             };
 
-        case SET_EVENT_PENDING:
+        case SET_EVENT_PENDING: 
             return {
                 ...state,
                 pending: action.payload,
