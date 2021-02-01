@@ -42,7 +42,7 @@ const PostsPage: React.FC <PostsPageProps> = () => {
                             <PostCard
                                 title={post.title}
                                 content={post.content}
-                                image={post.image}
+                                image={post.featuredImage}
                                 id={post._id}
                                 comments={post.comments}
                                 commentsCount={post.commentsCount}

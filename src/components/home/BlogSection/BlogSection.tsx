@@ -39,7 +39,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ userId }) => {
                                 id={post._id}
                                 title={post.title}
                                 content={post.content}
-                                image={post.image}
+                                image={post.featuredImage}
                                 comments={post.comments}
                                 commentsCount={post.commentsCount}
                                 authorId={post.author._id}

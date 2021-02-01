@@ -4,7 +4,7 @@ import {WithPagination} from "../../types";
 export interface Event {
     _id: string;
     title: string;
-    image?: string;
+    featuredImage?: string;
     author: User;
     content: string;
     eventDetails: {
