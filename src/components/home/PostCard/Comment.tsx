@@ -3,6 +3,7 @@ import {CommentContainer, ContentContainer, useStyles, UserName, CommentContent,
 import {Avatar} from "@material-ui/core";
 import DropdownReport from "../DropdownReport/DropdownReport";
 import {api_url} from "../../../api/setup";
+import {DetailsContainer} from "../TrainerCard/TrainerCard.styled";
 
 interface CommentProps {
     id: string;
@@ -17,7 +18,7 @@ const Comment: React.FC<CommentProps> = ({id, name, surname, comment, avatar}) =
 
     return (
         <CommentContainer>
-            <Avatar className={classes.avatar}>{avatar ? `${api_url}avatars/${avatar}` : `${name[0]}${surname[0]}`}</Avatar>
+            <Avatar className={classes.avatar} src={avatar ? `http://trenerzy.tomkowiak.eu/avatars/${avatar}` : undefined}>{`${name[0]}${surname[0]}`}</Avatar>
             <div>
                 <UserName>{`${name} ${surname}`}</UserName>
                 <CommentContent>{comment}</CommentContent>

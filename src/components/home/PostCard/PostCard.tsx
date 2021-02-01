@@ -41,6 +41,10 @@ interface PostCardProps {
     authorId: string;
 }
 
+const featuredImageUrl = (featuredImage = '') => {
+    return `http://trenerzy.tomkowiak.eu/featured-images/${featuredImage}`;
+}
+
 const PostCard: React.FC<PostCardProps> = ({ authorId, avatar, image, commentsCount, authorName, authorSurname, content, title, comments, id}) => {
     const history = useHistory();
     const { authorization } = useSelector(state => state.authorizationUsers);
@@ -70,7 +74,7 @@ const PostCard: React.FC<PostCardProps> = ({ authorId, avatar, image, commentsCo
         <StyledCard style={{marginBottom: '1rem'}}>
             {authorName && authorSurname && (
                 <DetailsContainer>
-                    <Avatar className={classes.avatar}>{avatar ? `${api_url}avatars/${avatar}` : `${authorName[0]}${authorSurname[0]}`}</Avatar>
+                    <Avatar className={classes.avatar} src={avatar ? `http://trenerzy.tomkowiak.eu/avatars/${avatar}` : undefined}>{`${authorName[0]}${authorSurname[0]}`}</Avatar>
                     <InfoContainer>
                         <Name>{`${authorName} ${authorSurname}`}</Name>
                     </InfoContainer>
@@ -79,7 +83,7 @@ const PostCard: React.FC<PostCardProps> = ({ authorId, avatar, image, commentsCo
             )}
             <CardMedia
                 style={{height: 400}}
-                image={`${api_url}feature-images/${image}`}
+                image={featuredImageUrl(image)}
             />
             <CardContent>
                 <StyledTitle gutterBottom variant="h5">
@@ -97,7 +101,7 @@ const PostCard: React.FC<PostCardProps> = ({ authorId, avatar, image, commentsCo
             </StyledCardActions>}
             {authorization?.user._id && <CommnetsContainer>
                 <AddCommentContainer>
-                    <Avatar className={classes.avatar}>{authorization.user.userDetails.avatar ? `${api_url}avatars/${authorization.user.userDetails.avatar}` : `${authorization.user.userDetails.firstName[0]}${authorization.user.userDetails.lastName[0]}`}</Avatar>
+                    <Avatar className={classes.avatar} src={authorization.user.userDetails.avatar ? `http://trenerzy.tomkowiak.eu/avatars/${authorization.user.userDetails.avatar}` : undefined}>{`${authorization.user.userDetails.firstName[0]}${authorization.user.userDetails.lastName[0]}`}</Avatar>
                     <StyledTextField onChange={(event) => setCommentValue(event.target.value)} value={commentValue} placeholder="Napisz komentarz"/>
                     <Button onClick={() => handleOnAdd()} variant="contained" color="primary">Dodaj</Button>
                 </AddCommentContainer>

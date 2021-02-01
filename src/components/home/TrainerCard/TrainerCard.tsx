@@ -34,7 +34,7 @@ const TrainerCard: React.FC<TrainerCardProps> = ({ avatar, id, name, description
         <StyledCard>
             <StyledCardContent>
                 <DetailsContainer>
-                    <Avatar className={classes.avatar} >{avatar ? `${api_url}avatars/${avatar}` : initials}</Avatar>
+                    <Avatar className={classes.avatar} src={avatar ? `http://trenerzy.tomkowiak.eu/avatars/${avatar}` : undefined}>{initials}</Avatar>
                     <DetailsInfoContainer>
                         <Typography variant="h5" component="h5">{name}</Typography>
                         <Location>{location}</Location>

@@ -85,7 +85,7 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
                         <UserInfo>
                             <InfoContainer>
                                 <DetailsContainer>
-                                    <Avatar className={classes.avatar} >{currentTrainer.userDetails.avatar ? `${api_url}avatars/${currentTrainer.userDetails.avatar}` : `${currentTrainer?.userDetails.firstName[0]}${currentTrainer?.userDetails.lastName[0]}`}</Avatar>
+                                    <Avatar className={classes.avatar} src={currentTrainer.userDetails.avatar ? `http://trenerzy.tomkowiak.eu/avatars/${currentTrainer.userDetails.avatar}` : undefined}>{`${currentTrainer?.userDetails.firstName[0]}${currentTrainer?.userDetails.lastName[0]}`}</Avatar>
                                     <DetailsInfoContainer>
                                         <Typography variant="h5" component="h5">{`${currentTrainer?.userDetails.firstName} ${currentTrainer?.userDetails.lastName}`}</Typography>
                                         <InfoRow><LocationOn style={{fontSize: '16px'}}/><InfoText>{currentTrainer?.userDetails.city}</InfoText></InfoRow>

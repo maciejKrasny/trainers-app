@@ -16,6 +16,11 @@ interface EventCardProps {
     place: string;
 }
 
+
+const featuredImageUrl = (featuredImage = '') => {
+    return `http://trenerzy.tomkowiak.eu/featured-images/${featuredImage}`;
+}
+
 const EventCard: React.FC<EventCardProps> = ({place, content, title, id, image, date}) => {
     const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
     const shorterContent = content.length > 300 ? content.substr(0, 300) : content;
@@ -32,7 +37,7 @@ const EventCard: React.FC<EventCardProps> = ({place, content, title, id, image, 
             </div>
             <CardMedia
                 style={{width: '100%', height: 300}}
-                image={`${api_url}feature-images/${image}`}
+                image={featuredImageUrl(image)}
                 title="Paella dish"
             />
             <CardContent>

@@ -23,7 +23,7 @@ const MostPopularTrainersCard: React.FC<MostPopularTrainerCardProps> = ({ avatar
     return (
         <TrainerCard>
             <DetailsContainer>
-                <Avatar className={classes.avatar}>{avatar ? `${api_url}avatars/${avatar}` : initials}</Avatar>
+                <Avatar className={classes.avatar} src={avatar ? `http://trenerzy.tomkowiak.eu/avatars/${avatar}` : undefined}>{initials}</Avatar>
                 <InfoContainer>
                     <Name>{name}</Name>
                     <Location>{location}</Location>

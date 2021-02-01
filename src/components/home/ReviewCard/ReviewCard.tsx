@@ -8,7 +8,7 @@ import {
     useStyles
 } from "../MostPopularTrainerCard/MostPopularTrainerCard.styled";
 import { Rating } from '@material-ui/lab';
-import {ReadMore} from "../PostCard/PostCard.styled";
+import {CommentContainer, ReadMore} from "../PostCard/PostCard.styled";
 import CardHeader from "@material-ui/core/CardHeader";
 import DropdownReport from "../DropdownReport/DropdownReport";
 import {api_url} from "../../../api/setup";
@@ -30,7 +30,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ avatar, id, name, content,ratin
     return (
         <Card style={{marginTop: '1rem'}}>
             <DetailsContainer >
-                <Avatar className={classes.avatar}>{avatar ? `${api_url}avatars/${avatar}` : `${name[0]}${surname[0]}`}</Avatar>
+                <Avatar className={classes.avatar} src={avatar ? `http://trenerzy.tomkowiak.eu/avatars/${avatar}` : undefined}>{ `${name[0]}${surname[0]}`}</Avatar>
                 <InfoContainer>
                     <Name>{`${name} ${surname}`}</Name>
                     <Location>{location}</Location>
