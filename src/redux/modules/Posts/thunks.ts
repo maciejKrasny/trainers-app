@@ -69,6 +69,7 @@ export const fetchObservePosts = (currentPage: number, handler: () => void): App
         const response = await kyClient.get(`user/posts?currentPage=${currentPage || 1}`);
         const data: WithPagination<Post[]> = await response.json();
         if (data) {
+            data.data = data.data.filter((post: any) => post.type === 'POST');
             dispatch(setObservePosts(data));
         }
     } catch(e){
