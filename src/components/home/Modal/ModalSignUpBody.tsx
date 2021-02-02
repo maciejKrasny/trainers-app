@@ -30,7 +30,7 @@ const singUpTrainerSchema = yup.object({
     city: yup.string().required(),
     surname: yup.string().required(),
     name: yup.string().required(),
-    nrPhone: yup.string().required(),
+    nrPhone: yup.number().required(),
     specializations: yup.array().of(yup.string())
 }).defined();
 
@@ -174,7 +174,7 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
                         label="Nr telefonu"
                         onChange={handleChange}
                         value={values.nrPhone}
-                        type="text"
+                        type="number"
                         margin="normal"
                         fullWidth
                     />
@@ -189,7 +189,7 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
                     </SelectContainer>
                     </div>
                 </Collapse>
-            <Button type="submit" variant="contained" color="primary" style={{ marginTop: '1rem' }} onClick={formik.submitForm}>Zarejestruj się</Button>
+            <Button type="submit" variant="contained" color="primary" style={{ marginTop: '1rem' }} >Zarejestruj się</Button>
             {pending && (
                 <LoadingBody>
                     <CircularProgress color="primary" />

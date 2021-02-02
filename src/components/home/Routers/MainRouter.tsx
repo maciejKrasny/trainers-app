@@ -22,8 +22,9 @@ const MainRouter: React.FC = () => {
         <Router>
             <Switch>
                 <Route path="/trenerzy" component={ListPage} />
+                <Route path="/obserwowane" component={PostsPage} />
                 <Route path="/:id" component={TrainerPage} />
-                <Route path="/" component={authorization?.user._id ? PostsPage : LandingPage} />
+                <Route path="/" component={LandingPage} />
             </Switch>
         </Router>
     )

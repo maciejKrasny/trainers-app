@@ -15,7 +15,6 @@ const LandingPage: React.FC = () => {
     useEffect(() => {
         dispatch(formDataThunks.fetchCities());
         dispatch(formDataThunks.fetchSpecializations());
-        dispatch(formDataThunks.fetchSpecializations());
         dispatch(userThunks.fetchMostPopularUsers());
     }, []);
 
