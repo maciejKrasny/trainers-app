@@ -26,12 +26,12 @@ interface ModalSignUpBodyProps {
 const singUpTrainerSchema = yup.object({
     email: yup.string().email().required(),
     type: yup.string().required(),
-    password: yup.string().min(1).required(),
+    password: yup.string().required(),
     city: yup.string().required(),
     surname: yup.string().required(),
     name: yup.string().required(),
-    phone: yup.number().required(),
-    specializations: yup.array().of(yup.string()).min(1)
+    nrPhone: yup.string().required(),
+    specializations: yup.array().of(yup.string())
 }).defined();
 
 const singUpUserSchema = yup.object({
@@ -62,6 +62,8 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
         validate: (values) => {
             const errors: any = {};
             if (values.type === 'TRAINER' && !singUpTrainerSchema.isValidSync(values)) {
+                console.log(singUpTrainerSchema.isValidSync(values))
+                console.log(values)
                 errors.email = 'error';
             }
             if (values.type === 'USER' && !singUpUserSchema.isValidSync(values)) {
