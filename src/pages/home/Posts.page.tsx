@@ -49,6 +49,7 @@ const PostsPage: React.FC <PostsPageProps> = () => {
                                 authorName={post.author.userDetails.firstName}
                                 authorSurname={post.author.userDetails.lastName}
                                 authorId={post.author._id}
+                                avatar={post.author.userDetails.avatar}
                             />
                         </div>
                     ))}
