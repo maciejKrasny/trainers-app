@@ -31,6 +31,7 @@ export interface PostsState {
 export const SET_POSTS = 'SET_POSTS';
 export const SET_OBSERVE_POSTS = 'SET_OBSERVE_POSTS';
 export const SET_POST_COMMENTS = 'SET_POST_COMMENTS';
+export const SET_POST_COMMENTS_OBSERVED = 'SET_POST_COMMENTS_OBSERVED';
 export const SET_POST_PENDING = 'SET_POST_PENDING';
 export const RESET = 'RESET_POSTS';
 
@@ -52,6 +53,14 @@ export interface SetPostCommentsAction {
     };
 }
 
+export interface SetPostCommentsObservedAction {
+    type: typeof SET_POST_COMMENTS_OBSERVED;
+    payload: {
+        postId: string;
+        comments: Comment[];
+    };
+}
+
 export interface SetObservePostsAction {
     type: typeof SET_OBSERVE_POSTS;
     payload: WithPagination<Post[]>;
@@ -61,4 +70,4 @@ export interface ResetPostsAction {
     type: typeof RESET;
 }
 
-export type PostActions = SetPostsAction | SetPostPending | SetPostCommentsAction | SetObservePostsAction | ResetPostsAction;
+export type PostActions = SetPostsAction | SetPostPending | SetPostCommentsAction | SetObservePostsAction | ResetPostsAction | SetPostCommentsObservedAction;

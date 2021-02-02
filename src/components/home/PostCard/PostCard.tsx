@@ -38,7 +38,7 @@ interface PostCardProps {
     authorSurname?: string;
     commentsCount: number;
     avatar?: string;
-    authorId: string;
+    authorId?: string;
 }
 
 const featuredImageUrl = (featuredImage = '') => {
@@ -58,14 +58,14 @@ const PostCard: React.FC<PostCardProps> = ({ authorId, avatar, image, commentsCo
 
     const handleOnAdd = () => {
         if (commentValue) {
-            dispatch(postThunks.addCommentToPost({postId: id, content: commentValue}));
+            dispatch(postThunks.addCommentToPost({postId: id, content: commentValue}, Boolean(authorId)));
             setCommentValue('');
         }
     }
 
     const handleToggleComments = (comments: Comment[], commentsCount: number) => {
         if (comments?.length !== commentsCount && !isCommentsOpen) {
-            dispatch(postThunks.fetchPostComments(id));
+           dispatch(postThunks.fetchPostComments(id, Boolean(authorId)));
         }
         setIsCommentsOpen(!isCommentsOpen);
     }

@@ -6,6 +6,7 @@ import {
     RESET,
     SET_OBSERVE_POSTS,
     SET_POST_COMMENTS,
+    SET_POST_COMMENTS_OBSERVED,
     SET_POST_PENDING,
     SET_POSTS
 } from './types';
@@ -35,6 +36,21 @@ const postReducer: Reducer<PostsState, PostActions> = (state = initialState, act
                 return {
                     ...state,
                     posts: posts,
+                };
+            }
+            return {
+                ...state,
+            };
+        }
+        case SET_POST_COMMENTS_OBSERVED: {
+            const currentPostIndex = state.observePosts.findIndex(post => post._id === action.payload.postId);
+            if (currentPostIndex !== -1) {
+                const posts = [...state.observePosts];
+                posts[currentPostIndex].comments = action.payload.comments;
+                posts[currentPostIndex].commentsCount = action.payload.comments.length;
+                return {
+                    ...state,
+                    observePosts: posts,
                 };
             }
             return {

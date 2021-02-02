@@ -42,7 +42,6 @@ const BlogSection: React.FC<BlogSectionProps> = ({ userId }) => {
                                 image={post.featuredImage}
                                 comments={post.comments}
                                 commentsCount={post.commentsCount}
-                                authorId={post.author._id}
                             />
                         ))}
                         {!pending && postsTotalPages >= postsCurrentPage && (

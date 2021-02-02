@@ -1,5 +1,5 @@
 import { AppThunk } from '../../store/store.types';
-import {setPending, setPosts, setObservePosts, setPostComments} from './actions';
+import {setPending, setPosts, setObservePosts, setPostComments, setPostCommentsObserved} from './actions';
 import {Comment, Post} from './types';
 import kyClient from "../../../api/kyClient";
 import {WithPagination} from "../../types";
@@ -22,7 +22,7 @@ export const fetchPosts = (currentPage: number, id: string, handler: () => void)
     dispatch(setPending(false));
 };
 
-export const addCommentToPost = (data: {postId: string; content: string}): AppThunk<Promise<void>> => async (
+export const addCommentToPost = (data: {postId: string; content: string}, isObservedPost: boolean): AppThunk<Promise<void>> => async (
     dispatch,
     getState
 ) => {
@@ -30,13 +30,18 @@ export const addCommentToPost = (data: {postId: string; content: string}): AppTh
         const response = await kyClient.post(`post/${data.postId}/comments`, {json: {content: data.content}});
         const comment: { comments: Comment[] } = await response.json();
         if (comment) {
-            dispatch(setPostComments({postId: data.postId, comments: comment.comments}));
+            if (isObservedPost) {
+                dispatch(setPostCommentsObserved({postId: data.postId, comments: comment.comments}));
+
+            } else {
+                dispatch(setPostComments({postId: data.postId, comments: comment.comments}));
+            }
         }
     } catch (e) {
     }
 };
 
-export const fetchPostComments = (postId: string): AppThunk<Promise<void>> => async (
+export const fetchPostComments = (postId: string, isObservedPost: boolean): AppThunk<Promise<void>> => async (
     dispatch,
     getState
 ) => {
@@ -44,7 +49,12 @@ export const fetchPostComments = (postId: string): AppThunk<Promise<void>> => as
         const response = await kyClient.get(`post/${postId}/comments`);
         const comment: {comments: Comment[]} = await response.json();
         if (comment) {
-            dispatch(setPostComments({postId: postId, comments: comment.comments}));
+            if (isObservedPost) {
+                dispatch(setPostCommentsObserved({postId: postId, comments: comment.comments}));
+
+            } else {
+                dispatch(setPostComments({postId: postId, comments: comment.comments}));
+            }
         }
     } catch (e) {
     }
