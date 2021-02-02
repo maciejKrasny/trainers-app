@@ -14,6 +14,7 @@ const TrainersListSection: React.FC<TrainersListSectionProps> = ({ trainers }) =
             {trainers.length ? (trainers.map(trainer => (
                     <TrainerCard
                         id={trainer._id}
+                        avatar={trainer.userDetails.avatar}
                         name={`${trainer.userDetails.firstName} ${trainer.userDetails.lastName}`}
                         description={trainer.userDetails.description || ''}
                         specializations={trainer.specializations || []}
