@@ -28,10 +28,10 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ userId }) => {
     const handler = useHttpErrorHandler();
 
     const handleOnAdd = () => {
-        if (reviewValue && ratingValue) {
+        if (reviewValue.trim() && ratingValue) {
             setReviewValue('');
             setRatingValue(0);
-            dispatch(reviewThunks.addReview({ id: userId, grade: ratingValue, content: reviewValue}, handler));
+            dispatch(reviewThunks.addReview({ id: userId, grade: ratingValue, content: reviewValue.trim()}, handler));
         } else {
             setError(true);
         }

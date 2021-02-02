@@ -59,7 +59,7 @@ const TrainerSection: React.FC<TrainerSectionProps> = () => {
         if (authorization?.token) {
             dispatch(userThunks.fetchObservedUsers());
         }
-    }, [users]);
+    }, [users, id]);
 
     if (trainersPending) {
         return (

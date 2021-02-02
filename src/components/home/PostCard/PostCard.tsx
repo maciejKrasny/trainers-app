@@ -57,8 +57,8 @@ const PostCard: React.FC<PostCardProps> = ({ authorId, avatar, image, commentsCo
     const [commentValue, setCommentValue] = useState<string>('');
 
     const handleOnAdd = () => {
-        if (commentValue) {
-            dispatch(postThunks.addCommentToPost({postId: id, content: commentValue}, Boolean(authorId)));
+        if (commentValue.trim()) {
+            dispatch(postThunks.addCommentToPost({postId: id, content: commentValue.trim()}, Boolean(authorId)));
             setCommentValue('');
         }
     }

@@ -32,7 +32,7 @@ const EventCard: React.FC<EventCardProps> = ({place, content, title, id, image, 
                 subheader={`${place}, ${dayjs(date).format('DD/MM/YYYY HH:mm')}`}
             />
                 <div style={{marginTop: 16}}>
-                    <DropdownReport reportType="EVENT" reportId={id}/>
+                    <DropdownReport reportType="POST" reportId={id}/>
                 </div>
             </div>
             <CardMedia
