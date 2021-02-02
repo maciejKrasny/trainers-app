@@ -62,8 +62,6 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
         validate: (values) => {
             const errors: any = {};
             if (values.type === 'TRAINER' && !singUpTrainerSchema.isValidSync(values)) {
-                console.log(singUpTrainerSchema.isValidSync(values))
-                console.log(values)
                 errors.email = 'error';
             }
             if (values.type === 'USER' && !singUpUserSchema.isValidSync(values)) {
