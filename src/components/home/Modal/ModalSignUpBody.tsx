@@ -185,7 +185,7 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
                         <SpecializationsSelect id="specializations" onChange={handleOnChangeSpecializations} value={values.specializations} />
                     </SelectContainer>
                     <SelectContainer>
-                        <TextField id="description" style={{ width: '100%' }} value={values.description} onChange={handleChange} multiline variant="outlined" label="Opis" />
+                        <TextField rowsMax={3} id="description" style={{ width: '100%' }} value={values.description} onChange={handleChange} multiline variant="outlined" label="Opis" />
                     </SelectContainer>
                     </div>
                 </Collapse>

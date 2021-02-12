@@ -77,7 +77,7 @@ const ModalReportBody: React.FC<ModalReportBodyProps> = ({ type, id, onClose}) =
             {errors.category && <Alert severity="error">Uzupełnij pola poprawnie</Alert>}
             <ReportCategorySelect transparent={false} value={values.category} onChange={(value) => handleOnChange('category', value)}/>
             <SelectContainer>
-                <TextField id="description" style={{ width: '100%' }} value={values.description} onChange={(event) => handleOnChange('description', event.target.value)} multiline variant="outlined" label="Opis" />
+                <TextField rowsMax={3} id="description" style={{ width: '100%' }} value={values.description} onChange={(event) => handleOnChange('description', event.target.value)} multiline variant="outlined" label="Opis" />
             </SelectContainer>
             <Button type="submit" variant="contained" color="primary" style={{ marginTop: '1rem' }}>Wyślij</Button>
             {pending && (
