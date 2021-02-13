@@ -3,7 +3,7 @@ import {GridContainer} from "../Grid/Grid.styled";
 
 export const FooterContainer = styled.div`
 position: sticky;
-  top: 1000px;
+  top: 100vh;
   padding: 1.5rem;
   margin-top: 6rem;
   background: rgb(31,31,37);

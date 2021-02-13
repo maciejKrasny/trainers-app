@@ -61,6 +61,7 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
         onSubmit: () => handleSignUp(),
         validate: (values) => {
             const errors: any = {};
+            dispatch(setError(false));
             if (values.type === 'TRAINER' && !singUpTrainerSchema.isValidSync(values)) {
                 errors.email = 'error';
             }
@@ -107,6 +108,15 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
         }
     }, [authorization?.token, pending])
 
+    const renderErrorAlert = () => {
+        if (error) {
+            return <Alert severity="error">Użytkownik z takim adresem email już istnieje</Alert>;
+        }
+        if (errors.email) {
+            return <Alert severity="error">Błędne dane</Alert>
+        }
+    }
+
     const handleSignUp = () => {
         const { city, specializations, surname, password, name, description, nrPhone, email, type } = values;
         dispatch(authorizationThunk.register({
@@ -129,10 +139,11 @@ const ModalSignUpBody: React.FC<ModalSignUpBodyProps> = ({ onClose }) => {
         }
     }, [authorization, pending])
 
+
     return (
         <BodyContainer onSubmit={handleSubmit} >
             <Typography variant="h4">Rejestracja</Typography>
-            {(error || errors.email) && <Alert severity="error">Błędne dane</Alert>}
+            {renderErrorAlert()}
             <TextField
                 id="email"
                 label="E-mail"
